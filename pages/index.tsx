@@ -9,7 +9,7 @@ const Wrapper = styled.div`
   background-color: #f1dede;
 `;
 
-const BgContainer = styled.div`
+const BgContainer = styled.div<{ colour: string }>`
   width: 100%;
   height: 48vh;
   position: absolute;

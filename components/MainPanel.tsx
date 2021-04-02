@@ -43,8 +43,16 @@ const MainPanel = () => {
           width: 100%;
           height: 100%;
         `}
-        Happy
-      ></div>
+      >
+        <div
+          css={`
+            flex: 1 1 0;
+            background-color: #aaa;
+            width: 100%;
+            height: 100%;
+          `}
+        ></div>
+      </div>
     </Root>
   );
 };
