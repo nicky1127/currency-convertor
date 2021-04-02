@@ -2,6 +2,8 @@ import React from "react";
 import styled from "styled-components";
 
 const Root = styled.div`
+  display: flex;
+  flex-direction: column;
   width: 100%;
   height: 300px;
   position: relative;
@@ -12,7 +14,7 @@ const Root = styled.div`
 
 const TabContainer = styled.div`
   display: flex;
-  min-height: 58px;
+  flex-basis: 58px;
   width: 100%;
 `;
 
@@ -34,6 +36,15 @@ const MainPanel = () => {
           <span>Charts</span>
         </Tab>
       </TabContainer>
+      <div
+        css={`
+          flex: 1 1 0;
+          background-color: #aaa;
+          width: 100%;
+          height: 100%;
+        `}
+        Happy
+      ></div>
     </Root>
   );
 };
