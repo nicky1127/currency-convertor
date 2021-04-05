@@ -37,8 +37,8 @@ const Input = styled.input.attrs(() => ({
 
 type props = {
   id: string;
-  amount: string;
-  handleChange: (evt: React.ChangeEvent<HTMLInputElement>) => void;
+  amount?: string;
+  handleChange?: (evt: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
 const InputWrapper = ({ id, amount, handleChange }: props) => {
