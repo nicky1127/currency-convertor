@@ -35,11 +35,13 @@ const Input = styled.input.attrs(() => ({
   }
 `;
 
-interface props {
+type props = {
   id: string;
-}
+  amount: string;
+  handleChange: (evt: React.ChangeEvent<HTMLInputElement>) => void;
+};
 
-const InputWrapper = ({ id }: props) => {
+const InputWrapper = ({ id, amount, handleChange }: props) => {
   return (
     <Root>
       <span
@@ -50,7 +52,7 @@ const InputWrapper = ({ id }: props) => {
         `}
       >
         <span>£</span>
-        <Input id={id} />
+        <Input id={id} value={amount} onChange={handleChange} />
       </span>
     </Root>
   );

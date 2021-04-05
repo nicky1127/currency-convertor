@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 
 import InputWrapper from "./InputWrapper";
@@ -42,6 +42,13 @@ const ErrorMsg = styled.div`
 `;
 
 const MainPanel = () => {
+  const [amount, setAmount] = useState("");
+
+  const handleChange = (evt: React.ChangeEvent<HTMLInputElement>): void => {
+    if (evt.target.value) {
+      setAmount(evt.target.value);
+    }
+  };
   return (
     <Root className="converterWrapper">
       <TabContainer>
@@ -76,7 +83,11 @@ const MainPanel = () => {
             `}
           >
             <Label htmlFor="input_amount">Amount</Label>
-            <InputWrapper id="input_amount" />
+            <InputWrapper
+              id="input_amount"
+              amount={amount}
+              handleChange={handleChange}
+            />
             <ErrorMsg>Please enter a valid value</ErrorMsg>
 
             <Label htmlFor="input_fromCurrency">From</Label>
