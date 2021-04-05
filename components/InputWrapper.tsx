@@ -49,6 +49,8 @@ const InputWrapper = ({ id, amount, handleChange }: props) => {
           font-size: 1.6rem;
           white-space: nowrap;
           width: 100%;
+          display: flex;
+          justify-content: flex-start;
         `}
       >
         <span>£</span>

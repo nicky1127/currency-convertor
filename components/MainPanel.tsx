@@ -93,6 +93,27 @@ const MainPanel = () => {
             <Label htmlFor="input_fromCurrency">From</Label>
             <InputWrapper id="input_fromCurrency" />
             <ErrorMsg>Please enter a valid value</ErrorMsg>
+            <div></div>
+            <div
+              css={`
+                margin: 0;
+                place-self: center;
+                display: flex;
+              `}
+            >
+              <button
+                css={`
+                  background: none;
+                  border: 1px solid rgb(221, 221, 221);
+                  border-radius: 50%;
+                  &:focus {
+                    outline: none;
+                  }
+                `}
+              >
+                S
+              </button>
+            </div>
           </div>
         </form>
       </div>

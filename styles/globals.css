@@ -26,3 +26,8 @@ select,
 textarea {
   font: inherit;
 }
+
+button {
+  appearance: button;
+  cursor: pointer;
+}
