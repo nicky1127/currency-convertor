@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 
+import InputWrapper from "./InputWrapper";
+
 const Root = styled.div`
   display: flex;
   flex-direction: column;
@@ -23,6 +25,20 @@ const Tab = styled.a`
   display: inline-flex;
   justify-content: center;
   align-items: center;
+`;
+
+const Label = styled.label`
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: rgb(20, 30, 55);
+  &::selection {
+    background-color: rgb(181, 215, 253);
+  }
+`;
+
+const ErrorMsg = styled.div`
+  font-size: 1.2rem;
+  color: rgb(179, 0, 33);
 `;
 
 const MainPanel = () => {
@@ -59,61 +75,13 @@ const MainPanel = () => {
               grid-auto-flow: column;
             `}
           >
-            <label
-              htmlFor="amount"
-              css={`
-                font-weight: 600;
-                color: rgb(20, 30, 55);
-                &::selection {
-                  background-color: rgb(181, 215, 253);
-                }
-              `}
-            >
-              Amount
-            </label>
-            <div
-              className="inputWrapper"
-              css={`
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                width: 100%;
-                border: 1px solid rgb(221, 221, 221);
-                border-radius: 6px;
-                box-shadow: rgb(0 17 51 / 5%) 0px 3px 15px;
-                padding: 12px;
-                overflow: hidden;
-                &:focus,
-                &:focus-within {
-                  border-color: #2f9c95;
-                  box-shadow: rgb(0 17 51 / 5%) 0px 3px 15px;
-                }
-              `}
-            >
-              <span
-                css={`
-                  white-space: nowrap;
-                  width: 100%;
-                `}
-              >
-                <span>£</span>
-                <input
-                  css={`
-                    border: 0px;
-                    margin: 0px;
-                    padding: 0px;
-                    /* align-self: stretch; */
-                    box-sizing: content-box;
-                    &:focus {
-                      outline: none;
-                    }
-                  `}
-                  type="text"
-                  inputMode="decimal"
-                  autoComplete="off"
-                />
-              </span>
-            </div>
+            <Label htmlFor="input_amount">Amount</Label>
+            <InputWrapper id="input_amount" />
+            <ErrorMsg>Please enter a valid value</ErrorMsg>
+
+            <Label htmlFor="input_fromCurrency">From</Label>
+            <InputWrapper id="input_fromCurrency" />
+            <ErrorMsg>Please enter a valid value</ErrorMsg>
           </div>
         </form>
       </div>
