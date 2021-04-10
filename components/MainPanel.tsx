@@ -103,15 +103,20 @@ const MainPanel = () => {
             >
               <button
                 css={`
+                  display: inline-flex;
                   background: none;
                   border: 1px solid rgb(221, 221, 221);
                   border-radius: 50%;
+                  padding: 16px;
                   &:focus {
                     outline: none;
                   }
                 `}
               >
-                <Convert />
+                <Convert
+                // height={20}
+                // width={20}
+                />
               </button>
             </div>
           </div>
