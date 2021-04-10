@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-
+import Convert from "../public/images/convert.svg";
 import InputWrapper from "./InputWrapper";
 
 const Root = styled.div`
@@ -111,7 +111,7 @@ const MainPanel = () => {
                   }
                 `}
               >
-                S
+                <Convert />
               </button>
             </div>
           </div>
