@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import Convert from "../public/images/convert.svg";
+import SwapIcon from "../public/images/convert.svg";
 import InputWrapper from "./InputWrapper";
 
 const Root = styled.div`
@@ -113,12 +113,14 @@ const MainPanel = () => {
                   }
                 `}
               >
-                <Convert
-                // height={20}
-                // width={20}
-                />
+                <SwapIcon />
               </button>
             </div>
+            <div></div>
+
+            <Label htmlFor="input_toCurrency">To</Label>
+            <InputWrapper id="input_toCurrency" />
+            <ErrorMsg>Please enter a valid value</ErrorMsg>
           </div>
         </form>
       </div>
