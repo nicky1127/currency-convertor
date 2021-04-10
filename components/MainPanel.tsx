@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import SwapIcon from "../public/images/convert.svg";
 import InputWrapper from "./InputWrapper";
+import IconButton from "./IconButton";
 
 const Root = styled.div`
   display: flex;
@@ -93,6 +94,7 @@ const MainPanel = () => {
             <Label htmlFor="input_fromCurrency">From</Label>
             <InputWrapper id="input_fromCurrency" />
             <ErrorMsg>Please enter a valid value</ErrorMsg>
+
             <div></div>
             <div
               css={`
@@ -101,20 +103,7 @@ const MainPanel = () => {
                 display: flex;
               `}
             >
-              <button
-                css={`
-                  display: inline-flex;
-                  background: none;
-                  border: 1px solid rgb(221, 221, 221);
-                  border-radius: 50%;
-                  padding: 16px;
-                  &:focus {
-                    outline: none;
-                  }
-                `}
-              >
-                <SwapIcon />
-              </button>
+              <IconButton icon={<SwapIcon />} />
             </div>
             <div></div>
 
