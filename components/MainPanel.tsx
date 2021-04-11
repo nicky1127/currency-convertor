@@ -3,6 +3,7 @@ import styled from "styled-components";
 import SwapIcon from "../public/images/convert.svg";
 import InputWrapper from "./InputWrapper";
 import IconButton from "./IconButton";
+import * as S from "./styles";
 
 const Root = styled.div`
   display: flex;
@@ -110,6 +111,17 @@ const MainPanel = () => {
             <Label htmlFor="input_toCurrency">To</Label>
             <InputWrapper id="input_toCurrency" />
             <ErrorMsg>Please enter a valid value</ErrorMsg>
+          </div>
+
+          <div
+            className="submitContainer"
+            css={`
+              display: flex;
+              margin-top: 24px;
+              justify-content: flex-end;
+            `}
+          >
+            <S.Button>Convert</S.Button>
           </div>
         </form>
       </div>

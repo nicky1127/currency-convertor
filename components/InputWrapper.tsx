@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 
+import * as S from "./styles";
+
 const Root = styled.div.attrs((props) => ({
   className: "inputWrapper",
 }))`
@@ -17,21 +19,6 @@ const Root = styled.div.attrs((props) => ({
   &:focus-within {
     border-color: #2f9c95;
     box-shadow: rgb(0 17 51 / 5%) 0px 3px 15px;
-  }
-`;
-
-const Input = styled.input.attrs(() => ({
-  type: "text",
-  inputMode: "decimal",
-  autoComplete: "off",
-}))`
-  border: 0px;
-  margin: 0px;
-  padding: 0px;
-  /* align-self: stretch; */
-  box-sizing: content-box;
-  &:focus {
-    outline: none;
   }
 `;
 
@@ -54,7 +41,7 @@ const InputWrapper = ({ id, amount, handleChange }: props) => {
         `}
       >
         <span>£</span>
-        <Input id={id} value={amount} onChange={handleChange} />
+        <S.Input id={id} value={amount} onChange={handleChange} />
       </span>
     </Root>
   );
