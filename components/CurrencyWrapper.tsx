@@ -10,6 +10,11 @@ const currencyMap = {
     name: "British Pound",
     src: "/images/gbp.svg",
   },
+  twd: {
+    code: "TWD",
+    name: "Taiwan New Dollar",
+    src: "/images/twd.svg",
+  },
 };
 
 const CurrencySelection = styled.div.attrs((props) => ({

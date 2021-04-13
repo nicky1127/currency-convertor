@@ -87,7 +87,11 @@ const ConvertPanel = () => {
           <div></div>
 
           <Label htmlFor="input-toCurrency">To</Label>
-          <InputWrapper id="input-toCurrency" />
+          <CurrencyWrapper
+            id="input_toCurrency"
+            inputActivated={false}
+            currency={toCurrency}
+          />
           <div></div>
         </div>
 
