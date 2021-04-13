@@ -4,6 +4,14 @@ import styled from "styled-components";
 
 import * as S from "./styles";
 
+const currencyMap = {
+  gbp: {
+    code: "GBP",
+    name: "British Pound",
+    src: "/images/gbp.svg",
+  },
+};
+
 const CurrencySelection = styled.div.attrs((props) => ({
   id: "fromCurrency-selection",
   className: "currency-wrapper",
@@ -61,12 +69,13 @@ const Input = styled.input<{ inputActivated: boolean }>`
 
 type props = {
   id: string;
+  currency: string;
   amount?: string;
   inputActivated?: boolean;
   handleChange?: (evt: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
-const CurrencyWrapper = ({ id, inputActivated }: props) => {
+const CurrencyWrapper = ({ id, currency, inputActivated }: props) => {
   return (
     <div
       css={`
@@ -97,8 +106,8 @@ const CurrencyWrapper = ({ id, inputActivated }: props) => {
             `}
           >
             <img
-              src="/images/gbp.svg"
-              alt="GBP"
+              src={currencyMap[currency].src}
+              alt={currencyMap[currency].name}
               css={`
                 object-fit: contain;
                 height: 100%;
@@ -122,9 +131,9 @@ const CurrencyWrapper = ({ id, inputActivated }: props) => {
                 color: rgb(20, 30, 55);
               `}
             >
-              GBP -{" "}
+              {`${currencyMap[currency].code} - `}
             </span>
-            British Pound
+            {currencyMap[currency].name}
           </div>
         </div>
       </CurrencySelection>

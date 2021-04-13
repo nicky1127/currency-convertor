@@ -25,6 +25,8 @@ const ErrorMsg = styled.div`
 
 const ConvertPanel = () => {
   const [amount, setAmount] = useState("");
+  const [fromCurrency, setFromCurrency] = useState("gbp");
+  const [toCurrency, setToCurrency] = useState("twd");
 
   const handleChange = (evt: React.ChangeEvent<HTMLInputElement>): void => {
     if (evt.target.value) {
@@ -65,7 +67,11 @@ const ConvertPanel = () => {
           <ErrorMsg>Please enter a valid value</ErrorMsg>
 
           <Label htmlFor="input_fromCurrency">From</Label>
-          <CurrencyWrapper id="input_fromCurrency" inputActivated={false} />
+          <CurrencyWrapper
+            id="input_fromCurrency"
+            inputActivated={false}
+            currency={fromCurrency}
+          />
           <div></div>
 
           <div></div>
