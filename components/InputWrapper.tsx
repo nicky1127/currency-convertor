@@ -10,6 +10,7 @@ const Root = styled.div.attrs((props) => ({
   align-items: center;
   justify-content: space-between;
   width: 100%;
+  height: 100%;
   border: 1px solid rgb(221, 221, 221);
   border-radius: 6px;
   box-shadow: rgb(0 17 51 / 5%) 0px 3px 15px;

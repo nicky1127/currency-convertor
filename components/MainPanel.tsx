@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import SwapIcon from "../public/images/convert.svg";
 import InputWrapper from "./InputWrapper";
+import CurrencyWrapper from "./CurrencyWrapper";
 import IconButton from "./IconButton";
 import * as S from "./styles";
 
@@ -93,8 +94,8 @@ const MainPanel = () => {
             <ErrorMsg>Please enter a valid value</ErrorMsg>
 
             <Label htmlFor="input_fromCurrency">From</Label>
-            <InputWrapper id="input_fromCurrency" />
-            <ErrorMsg>Please enter a valid value</ErrorMsg>
+            <CurrencyWrapper id="input_fromCurrency" inputActivated={false} />
+            <div></div>
 
             <div></div>
             <div
@@ -108,9 +109,9 @@ const MainPanel = () => {
             </div>
             <div></div>
 
-            <Label htmlFor="input_toCurrency">To</Label>
-            <InputWrapper id="input_toCurrency" />
-            <ErrorMsg>Please enter a valid value</ErrorMsg>
+            <Label htmlFor="input-toCurrency">To</Label>
+            <InputWrapper id="input-toCurrency" />
+            <div></div>
           </div>
 
           <div
