@@ -28,10 +28,19 @@ const ConvertPanel = () => {
   const [fromCurrency, setFromCurrency] = useState("gbp");
   const [toCurrency, setToCurrency] = useState("twd");
 
+  console.log(`fromCurrency`, fromCurrency);
+
   const handleChange = (evt: React.ChangeEvent<HTMLInputElement>): void => {
     if (evt.target.value) {
       setAmount(evt.target.value);
     }
+  };
+
+  const handleClickSwapButton = (evt: React.MouseEvent<HTMLElement>): void => {
+    evt.preventDefault();
+    const arr = [fromCurrency, toCurrency];
+    setFromCurrency(arr[1]);
+    setToCurrency(arr[0]);
   };
 
   return (
@@ -82,7 +91,10 @@ const ConvertPanel = () => {
               display: flex;
             `}
           >
-            <IconButton icon={<SwapIcon />} />
+            <IconButton
+              icon={<SwapIcon />}
+              handleClick={handleClickSwapButton}
+            />
           </div>
           <div></div>
 

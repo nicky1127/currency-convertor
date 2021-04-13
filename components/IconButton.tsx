@@ -2,9 +2,10 @@ import React from "react";
 
 type props = {
   icon: JSX.Element;
+  handleClick: () => void;
 };
 
-const IconButton = ({ icon }: props) => {
+const IconButton = ({ icon, handleClick }: props) => {
   return (
     <button
       css={`
@@ -17,6 +18,7 @@ const IconButton = ({ icon }: props) => {
           outline: none;
         }
       `}
+      onClick={handleClick}
     >
       {icon}
     </button>

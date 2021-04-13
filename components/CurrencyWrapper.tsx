@@ -4,7 +4,17 @@ import styled from "styled-components";
 
 import * as S from "./styles";
 
-const currencyMap = {
+interface currency {
+  code: string;
+  name: string;
+  src: string;
+}
+
+interface currencyMap {
+  [currencyName: string]: currency;
+}
+
+const currencyMap: Record<string, currency> = {
   gbp: {
     code: "GBP",
     name: "British Pound",
@@ -16,6 +26,19 @@ const currencyMap = {
     src: "/images/twd.svg",
   },
 };
+
+// const currencyMap: currencyMap = {
+//   gbp: {
+//     code: "GBP",
+//     name: "British Pound",
+//     src: "/images/gbp.svg",
+//   },
+//   twd: {
+//     code: "TWD",
+//     name: "Taiwan New Dollar",
+//     src: "/images/twd.svg",
+//   },
+// };
 
 const CurrencySelection = styled.div.attrs((props) => ({
   id: "fromCurrency-selection",
@@ -103,10 +126,10 @@ const CurrencyWrapper = ({ id, currency, inputActivated }: props) => {
               display: inline-flex;
               position: relative;
               overflow: hidden;
-              horder-radius: 2px;
+              border-radius: 2px;
               width: 24px;
               height: auto;
-              flex-shrunk: 0;
+              flex-shrink: 0;
               margin-right: 8px;
             `}
           >
