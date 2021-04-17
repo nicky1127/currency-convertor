@@ -38,7 +38,7 @@ const ConvertPanel = () => {
 
   useEffect(() => {
     if (isNaN(amount)) {
-      return setErrMsg("Invalid Input");
+      return setErrMsg("Please enter a valid amount");
     }
     return setErrMsg("");
   }, [amount]);
