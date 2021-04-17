@@ -54,7 +54,7 @@ const ConvertPanel = () => {
     <div
       css={`
         flex: 1 1 0;
-        background-color: #fff;
+        /* background-color: #fff; */
         padding: 48px;
         box-sizing: border-box;
         width: 100%;
