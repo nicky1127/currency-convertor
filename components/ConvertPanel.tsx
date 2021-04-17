@@ -1,6 +1,6 @@
 "use strict";
 
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import styled from "styled-components";
 
 import SwapIcon from "../public/images/convert.svg";
@@ -29,8 +29,11 @@ const ConvertPanel = () => {
   const [amount, setAmount] = useState("");
   const [fromCurrency, setFromCurrency] = useState("gbp");
   const [toCurrency, setToCurrency] = useState("twd");
+  const [currencyArr, setCurrencyArr] = useState(["gbp", "twd"]);
 
-  console.log(`fromCurrency`, fromCurrency);
+  const value = useRef(1);
+
+  console.log(`currencyArr`, currencyArr);
 
   const handleChange = (evt: React.ChangeEvent<HTMLInputElement>): void => {
     if (evt.target.value) {
@@ -38,11 +41,14 @@ const ConvertPanel = () => {
     }
   };
 
-  const handleClickSwapButton = (evt: React.MouseEvent<HTMLElement>): void => {
+  const handleClickSwapButton = (
+    evt: React.MouseEvent<HTMLButtonElement>
+  ): void => {
     evt.preventDefault();
-    const arr = [fromCurrency, toCurrency];
-    setFromCurrency(arr[1]);
-    setToCurrency(arr[0]);
+    // console.log("==============>function");
+    // console.log(`value.current`, value.current);
+    setCurrencyArr(([a, b]) => [b, a]);
+    // value.current = value.current + 1;
   };
 
   return (
@@ -81,7 +87,7 @@ const ConvertPanel = () => {
           <CurrencyWrapper
             id="input_fromCurrency"
             inputActivated={false}
-            currency={fromCurrency}
+            currency={currencyArr[0]}
           />
           <div></div>
 
@@ -104,7 +110,7 @@ const ConvertPanel = () => {
           <CurrencyWrapper
             id="input_toCurrency"
             inputActivated={false}
-            currency={toCurrency}
+            currency={currencyArr[1]}
           />
           <div></div>
         </div>
