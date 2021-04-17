@@ -28,6 +28,8 @@ const Tab = styled.a`
 `;
 
 const MainPanel = () => {
+  console.log("%c MainModal", "background: #222; color: #00ccff");
+
   return (
     <Root className="converterWrapper">
       <TabContainer>

@@ -2,7 +2,7 @@ import React from "react";
 
 type props = {
   icon: JSX.Element;
-  handleClick: () => void;
+  handleClick(event: React.MouseEvent<HTMLButtonElement>): void;
 };
 
 const IconButton = ({ icon, handleClick }: props) => {

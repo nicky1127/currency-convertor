@@ -24,6 +24,8 @@ const ErrorMsg = styled.div`
 `;
 
 const ConvertPanel = () => {
+  console.log("%c MainModal", "background: #222; color: yellow");
+
   const [amount, setAmount] = useState("");
   const [fromCurrency, setFromCurrency] = useState("gbp");
   const [toCurrency, setToCurrency] = useState("twd");

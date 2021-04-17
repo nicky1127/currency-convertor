@@ -104,6 +104,7 @@ type props = {
 };
 
 const CurrencyWrapper = ({ id, currency, inputActivated }: props) => {
+  // console.log(`%c CurrencyWrapper-${id}`, "background: #222; color: red");
   return (
     <div
       css={`
