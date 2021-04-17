@@ -1,6 +1,6 @@
 "use strict";
 
-import React, { useState, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 
 import SwapIcon from "../public/images/convert.svg";
@@ -28,13 +28,23 @@ const ConvertPanel = () => {
 
   const [amount, setAmount] = useState("");
   const [currencyArr, setCurrencyArr] = useState(["gbp", "twd"]);
+  const [errMsg, setErrMsg] = useState("");
   // const [fromCurrency, setFromCurrency] = useState("gbp");
   // const [toCurrency, setToCurrency] = useState("twd");
 
   // const value = useRef(1);
 
+  console.log(`amount`, amount);
+
+  useEffect(() => {
+    if (isNaN(amount)) {
+      return setErrMsg("Invalid Input");
+    }
+    return setErrMsg("");
+  }, [amount]);
+
   const handleChange = (evt: React.ChangeEvent<HTMLInputElement>): void => {
-    if (evt.target.value) {
+    if (evt.target.name) {
       setAmount(evt.target.value);
     }
   };
@@ -58,7 +68,6 @@ const ConvertPanel = () => {
         padding: 48px;
         box-sizing: border-box;
         width: 100%;
-        height: 100%;
       `}
     >
       <form>
@@ -77,10 +86,11 @@ const ConvertPanel = () => {
           <Label htmlFor="input_amount">Amount</Label>
           <InputWrapper
             id="input_amount"
+            name="amount"
             amount={amount}
             handleChange={handleChange}
           />
-          <ErrorMsg>Please enter a valid value</ErrorMsg>
+          <ErrorMsg>{errMsg}</ErrorMsg>
 
           <Label htmlFor="input_fromCurrency">From</Label>
           <CurrencyWrapper
@@ -91,18 +101,12 @@ const ConvertPanel = () => {
           <div></div>
 
           <div></div>
-          <div
-            css={`
-              margin: 0;
-              place-self: center;
-              display: flex;
-            `}
-          >
+          <S.ButtonWrapper>
             <IconButton
               icon={<SwapIcon />}
               handleClick={handleClickSwapButton}
             />
-          </div>
+          </S.ButtonWrapper>
           <div></div>
 
           <Label htmlFor="input-toCurrency">To</Label>

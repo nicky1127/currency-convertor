@@ -4,10 +4,9 @@ import styled from "styled-components";
 import ConvertPanel from "./ConvertPanel";
 
 const Root = styled.div`
-  display: flex;
-  flex-direction: column;
+  /* display: flex; */
+  /* flex-direction: column; */
   width: 100%;
-  height: 300px;
   position: relative;
   background-color: #fff;
   border-radius: 8px;
@@ -16,7 +15,7 @@ const Root = styled.div`
 
 const TabContainer = styled.div`
   display: flex;
-  flex-basis: 58px;
+  height: 58px;
   width: 100%;
 `;
 

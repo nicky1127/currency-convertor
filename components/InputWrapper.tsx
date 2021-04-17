@@ -25,11 +25,12 @@ const Root = styled.div.attrs((props) => ({
 
 type props = {
   id: string;
+  name: string;
   amount?: string;
   handleChange?: (evt: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
-const InputWrapper = ({ id, amount, handleChange }: props) => {
+const InputWrapper = ({ id, amount, name, handleChange }: props) => {
   return (
     <Root>
       <span
@@ -42,7 +43,7 @@ const InputWrapper = ({ id, amount, handleChange }: props) => {
         `}
       >
         <span>£</span>
-        <S.Input id={id} value={amount} onChange={handleChange} />
+        <S.Input id={id} name={name} value={amount} onChange={handleChange} />
       </span>
     </Root>
   );

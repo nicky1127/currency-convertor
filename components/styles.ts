@@ -52,3 +52,10 @@ export const Input = styled.input.attrs(() => ({
     outline: none;
   }
 `;
+
+
+export const ButtonWrapper = styled.div`
+  margin: 0;
+             place-self: center;
+              display: flex;
+`;
