@@ -24,16 +24,14 @@ const ErrorMsg = styled.div`
 `;
 
 const ConvertPanel = () => {
-  console.log("%c MainModal", "background: #222; color: yellow");
+  console.log("%c ConvertPanel", "background: #222; color: yellow");
 
   const [amount, setAmount] = useState("");
-  const [fromCurrency, setFromCurrency] = useState("gbp");
-  const [toCurrency, setToCurrency] = useState("twd");
   const [currencyArr, setCurrencyArr] = useState(["gbp", "twd"]);
+  // const [fromCurrency, setFromCurrency] = useState("gbp");
+  // const [toCurrency, setToCurrency] = useState("twd");
 
-  const value = useRef(1);
-
-  console.log(`currencyArr`, currencyArr);
+  // const value = useRef(1);
 
   const handleChange = (evt: React.ChangeEvent<HTMLInputElement>): void => {
     if (evt.target.value) {
@@ -45,6 +43,7 @@ const ConvertPanel = () => {
     evt: React.MouseEvent<HTMLButtonElement>
   ): void => {
     evt.preventDefault();
+    evt.stopPropagation();
     // console.log("==============>function");
     // console.log(`value.current`, value.current);
     setCurrencyArr(([a, b]) => [b, a]);
