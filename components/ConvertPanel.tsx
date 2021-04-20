@@ -27,7 +27,9 @@ const ConvertPanel = () => {
   console.log("%c ConvertPanel", "background: #222; color: yellow");
 
   const [amount, setAmount] = useState("");
+  const [rate, setRate] = useState(null);
   const [currencyArr, setCurrencyArr] = useState(["gbp", "twd"]);
+  const [fullNameArr, setFullNameArr] = useState(["", ""]);
   const [errMsg, setErrMsg] = useState("");
   // const [fromCurrency, setFromCurrency] = useState("gbp");
   // const [toCurrency, setToCurrency] = useState("twd");
@@ -35,6 +37,8 @@ const ConvertPanel = () => {
   // const value = useRef(1);
 
   console.log(`amount`, amount);
+  console.log(`rate`, rate);
+  console.log(`fullNameArr`, fullNameArr);
 
   useEffect(() => {
     if (isNaN(+amount)) {
@@ -75,7 +79,17 @@ const ConvertPanel = () => {
 			`
     )
       .then((res) => res.json())
-      .then((json) => console.log(json));
+      .then((json) => {
+        console.log(`json`, json);
+        const rateObj = json["Realtime Currency Exchange Rate"];
+        if (rateObj) {
+          const rate = rateObj["5. Exchange Rate"];
+          const fromCurrency = rateObj["2. From_Currency Name"];
+          const toCurrency = rateObj["4. To_Currency Name"];
+          setRate(rate);
+          setFullNameArr([fromCurrency, toCurrency]);
+        }
+      });
   };
 
   return (
@@ -136,6 +150,29 @@ const ConvertPanel = () => {
           <div></div>
         </div>
 
+        <div
+          className="figureContainer"
+          css={`
+            margin-top: 24px;
+          `}
+        >
+          <p
+            css={`
+              color: rgb(92, 102, 123);
+              font-size: 1.6rem;
+              font-weight: 600;
+            `}
+          >{`${amount} ${fullNameArr[0]} =`}</p>
+          <p
+            css={`
+              color: rgb(46, 60, 87);
+              font-size: 3rem;
+              font-weight: 600;
+            `}
+          >
+            {`${+amount * rate} ${fullNameArr[1]}`}
+          </p>
+        </div>
         <div
           className="submitContainer"
           css={`
