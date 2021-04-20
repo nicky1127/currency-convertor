@@ -37,7 +37,7 @@ const ConvertPanel = () => {
   console.log(`amount`, amount);
 
   useEffect(() => {
-    if (isNaN(amount)) {
+    if (isNaN(+amount)) {
       return setErrMsg("Please enter a valid amount");
     }
     return setErrMsg("");
@@ -58,6 +58,24 @@ const ConvertPanel = () => {
     // console.log(`value.current`, value.current);
     setCurrencyArr(([a, b]) => [b, a]);
     // value.current = value.current + 1;
+  };
+
+  const handleClickConvertButton = (
+    evt: React.MouseEvent<HTMLButtonElement>
+  ): void => {
+    evt.preventDefault();
+    evt.stopPropagation();
+
+    fetch(
+      `https://www.alphavantage.co/query?
+			function=CURRENCY_EXCHANGE_RATE&
+			from_currency=${currencyArr[0].toUpperCase()}&
+			to_currency=${currencyArr[1].toUpperCase()}&
+			apikey=CR78XFOMW0NKUEI7
+			`
+    )
+      .then((res) => res.json())
+      .then((json) => console.log(json));
   };
 
   return (
@@ -126,7 +144,7 @@ const ConvertPanel = () => {
             justify-content: flex-end;
           `}
         >
-          <S.Button>Convert</S.Button>
+          <S.Button onClick={handleClickConvertButton}>Convert</S.Button>
         </div>
       </form>
     </div>
