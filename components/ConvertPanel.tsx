@@ -170,7 +170,9 @@ const ConvertPanel = () => {
               font-weight: 600;
             `}
           >
-            {`${+amount * rate} ${fullNameArr[1]}`}
+            {`${(+amount * rate).toLocaleString("en-US", {
+              maximumFractionDigits: 2,
+            })} ${fullNameArr[1]}`}
           </p>
         </div>
         <div
