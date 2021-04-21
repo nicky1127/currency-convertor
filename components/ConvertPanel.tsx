@@ -162,7 +162,10 @@ const ConvertPanel = () => {
               font-size: 1.6rem;
               font-weight: 600;
             `}
-          >{`${amount} ${fullNameArr[0]} =`}</p>
+          >{`${(+amount).toLocaleString("en-US", {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          })} ${fullNameArr[0]} = `}</p>
           <p
             css={`
               color: rgb(46, 60, 87);
@@ -171,9 +174,32 @@ const ConvertPanel = () => {
             `}
           >
             {`${(+amount * rate).toLocaleString("en-US", {
+              minimumFractionDigits: 2,
               maximumFractionDigits: 2,
             })} ${fullNameArr[1]}`}
           </p>
+        </div>
+        <div
+          className="unitRatesContainer"
+          css={`
+            color: rgb(92, 102, 123);
+            font-size: 1.4rem;
+            text-align: left;
+            margin-bottom: 24px;
+          `}
+        >
+          <p>{`1 ${currencyArr[0].toUpperCase()} = ${Number(
+            rate
+          ).toLocaleString("en-US", {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 5,
+          })} ${currencyArr[1].toUpperCase()}`}</p>
+          <p>{`1 ${currencyArr[1].toUpperCase()} = ${Number(
+            1 / rate
+          ).toLocaleString("en-US", {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 5,
+          })} ${currencyArr[0].toUpperCase()}`}</p>
         </div>
         <div
           className="submitContainer"
