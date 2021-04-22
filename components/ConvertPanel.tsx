@@ -30,6 +30,7 @@ const ConvertPanel = () => {
   const [rate, setRate] = useState(null);
   const [currencyArr, setCurrencyArr] = useState(["gbp", "twd"]);
   const [fullNameArr, setFullNameArr] = useState(["", ""]);
+  const [lastUpdated, setLastUpdated] = useState("");
   const [errMsg, setErrMsg] = useState("");
   // const [fromCurrency, setFromCurrency] = useState("gbp");
   // const [toCurrency, setToCurrency] = useState("twd");
@@ -86,8 +87,10 @@ const ConvertPanel = () => {
           const rate = rateObj["5. Exchange Rate"];
           const fromCurrency = rateObj["2. From_Currency Name"];
           const toCurrency = rateObj["4. To_Currency Name"];
+          const time = rateObj["6. Last Refreshed"];
           setRate(rate);
           setFullNameArr([fromCurrency, toCurrency]);
+          setLastUpdated(time);
         }
       });
   };
@@ -171,6 +174,7 @@ const ConvertPanel = () => {
               color: rgb(46, 60, 87);
               font-size: 3rem;
               font-weight: 600;
+              margin-bottom: 24px;
             `}
           >
             {`${(+amount * rate).toLocaleString("en-US", {
@@ -200,6 +204,13 @@ const ConvertPanel = () => {
             minimumFractionDigits: 2,
             maximumFractionDigits: 5,
           })} ${currencyArr[0].toUpperCase()}`}</p>
+
+          <p
+            css={`
+              margin-top: 12px;
+              font-size: 1.2rem;
+            `}
+          >{`Last updated ${lastUpdated}`}</p>
         </div>
         <div
           className="submitContainer"
