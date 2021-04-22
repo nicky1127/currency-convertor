@@ -32,6 +32,7 @@ const ConvertPanel = () => {
   const [fullNameArr, setFullNameArr] = useState(["", ""]);
   const [lastUpdated, setLastUpdated] = useState("");
   const [errMsg, setErrMsg] = useState("");
+  const [hideButton, setHideButton] = useState(false);
   // const [fromCurrency, setFromCurrency] = useState("gbp");
   // const [toCurrency, setToCurrency] = useState("twd");
 
@@ -71,6 +72,10 @@ const ConvertPanel = () => {
     evt.preventDefault();
     evt.stopPropagation();
 
+    if (!amount || isNaN(+amount)) {
+      return setErrMsg("Please enter a valid amount");
+    }
+
     fetch(
       `https://www.alphavantage.co/query?
 			function=CURRENCY_EXCHANGE_RATE&
@@ -92,6 +97,8 @@ const ConvertPanel = () => {
           setFullNameArr([fromCurrency, toCurrency]);
           setLastUpdated(time);
         }
+
+        setHideButton(true);
       });
   };
 
@@ -152,76 +159,80 @@ const ConvertPanel = () => {
           />
           <div></div>
         </div>
+        {hideButton ? (
+          <div className="resultContainer">
+            <div
+              className="figureContainer"
+              css={`
+                margin-top: 24px;
+              `}
+            >
+              <p
+                css={`
+                  color: rgb(92, 102, 123);
+                  font-size: 1.6rem;
+                  font-weight: 600;
+                `}
+              >{`${(+amount).toLocaleString("en-US", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              })} ${fullNameArr[0]} = `}</p>
+              <p
+                css={`
+                  color: rgb(46, 60, 87);
+                  font-size: 3rem;
+                  font-weight: 600;
+                  margin-bottom: 24px;
+                `}
+              >
+                {`${(+amount * rate).toLocaleString("en-US", {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                })} ${fullNameArr[1]}`}
+              </p>
+            </div>
+            <div
+              className="unitRatesContainer"
+              css={`
+                color: rgb(92, 102, 123);
+                font-size: 1.4rem;
+                text-align: left;
+                margin-bottom: 24px;
+              `}
+            >
+              <p>{`1 ${currencyArr[0].toUpperCase()} = ${Number(
+                rate
+              ).toLocaleString("en-US", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 5,
+              })} ${currencyArr[1].toUpperCase()}`}</p>
+              <p>{`1 ${currencyArr[1].toUpperCase()} = ${Number(
+                1 / rate
+              ).toLocaleString("en-US", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 5,
+              })} ${currencyArr[0].toUpperCase()}`}</p>
 
-        <div
-          className="figureContainer"
-          css={`
-            margin-top: 24px;
-          `}
-        >
-          <p
+              <p
+                css={`
+                  margin-top: 12px;
+                  font-size: 1.2rem;
+                `}
+              >{`Last updated ${lastUpdated}`}</p>
+            </div>
+          </div>
+        ) : (
+          <div
+            className="submitContainer"
             css={`
-              color: rgb(92, 102, 123);
-              font-size: 1.6rem;
-              font-weight: 600;
-            `}
-          >{`${(+amount).toLocaleString("en-US", {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2,
-          })} ${fullNameArr[0]} = `}</p>
-          <p
-            css={`
-              color: rgb(46, 60, 87);
-              font-size: 3rem;
-              font-weight: 600;
-              margin-bottom: 24px;
+              display: flex;
+              margin-top: 24px;
+              justify-content: flex-end;
             `}
           >
-            {`${(+amount * rate).toLocaleString("en-US", {
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2,
-            })} ${fullNameArr[1]}`}
-          </p>
-        </div>
-        <div
-          className="unitRatesContainer"
-          css={`
-            color: rgb(92, 102, 123);
-            font-size: 1.4rem;
-            text-align: left;
-            margin-bottom: 24px;
-          `}
-        >
-          <p>{`1 ${currencyArr[0].toUpperCase()} = ${Number(
-            rate
-          ).toLocaleString("en-US", {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 5,
-          })} ${currencyArr[1].toUpperCase()}`}</p>
-          <p>{`1 ${currencyArr[1].toUpperCase()} = ${Number(
-            1 / rate
-          ).toLocaleString("en-US", {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 5,
-          })} ${currencyArr[0].toUpperCase()}`}</p>
-
-          <p
-            css={`
-              margin-top: 12px;
-              font-size: 1.2rem;
-            `}
-          >{`Last updated ${lastUpdated}`}</p>
-        </div>
-        <div
-          className="submitContainer"
-          css={`
-            display: flex;
-            margin-top: 24px;
-            justify-content: flex-end;
-          `}
-        >
-          <S.Button onClick={handleClickConvertButton}>Convert</S.Button>
-        </div>
+            <S.Button onClick={handleClickConvertButton}>Convert</S.Button>
+          </div>
+        )}
       </form>
     </div>
   );
