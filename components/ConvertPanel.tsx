@@ -63,6 +63,8 @@ const ConvertPanel = () => {
     // console.log("==============>function");
     // console.log(`value.current`, value.current);
     setCurrencyArr(([a, b]) => [b, a]);
+    setRate(([a, b]) => [b, a]);
+    setFullNameArr(([a, b]) => [b, a]);
     // value.current = value.current + 1;
   };
 
@@ -93,7 +95,7 @@ const ConvertPanel = () => {
           const fromCurrency = rateObj["2. From_Currency Name"];
           const toCurrency = rateObj["4. To_Currency Name"];
           const time = rateObj["6. Last Refreshed"];
-          setRate(rate);
+          setRate([1, +rate]);
           setFullNameArr([fromCurrency, toCurrency]);
           setLastUpdated(time);
         }
@@ -185,7 +187,7 @@ const ConvertPanel = () => {
                   margin-bottom: 24px;
                 `}
               >
-                {`${(+amount * rate).toLocaleString("en-US", {
+                {`${((+amount * rate[1]) / rate[0]).toLocaleString("en-US", {
                   minimumFractionDigits: 2,
                   maximumFractionDigits: 2,
                 })} ${fullNameArr[1]}`}
@@ -201,13 +203,13 @@ const ConvertPanel = () => {
               `}
             >
               <p>{`1 ${currencyArr[0].toUpperCase()} = ${Number(
-                rate
+                rate[1] / rate[0]
               ).toLocaleString("en-US", {
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 5,
               })} ${currencyArr[1].toUpperCase()}`}</p>
               <p>{`1 ${currencyArr[1].toUpperCase()} = ${Number(
-                1 / rate
+                rate[0] / rate[1]
               ).toLocaleString("en-US", {
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 5,
