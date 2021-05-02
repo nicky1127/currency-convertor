@@ -180,6 +180,7 @@ const ConvertPanel = () => {
                   })} ${fullNameArr[1]}`}
                 </p>
               </div>
+
               <S.UnitRatesContainer className="unitRatesContainer">
                 <p>{`1 ${currencyArr[0].toUpperCase()} = ${Number(rate[1] / rate[0]).toLocaleString(
                   'en-US',

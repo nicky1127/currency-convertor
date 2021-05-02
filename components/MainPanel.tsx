@@ -21,7 +21,7 @@ const TabContainer = styled.div`
   width: 100%;
 `;
 
-const Tab = styled.a`
+const Tab = styled.a<{ active: boolean }>`
   flex: 1 1 0px;
   display: inline-flex;
   justify-content: center;
@@ -30,7 +30,13 @@ const Tab = styled.a`
   padding: 4px;
   font-size: 1.4rem;
   font-weight: bold;
-  color: #267e78;
+  /* color: #267e78; */
+  color: ${(props) => (props.active ? '#267e78' : 'rgb(55, 80, 110)')};
+  background-color: ${(props) => (props.active ? '#fff' : ' rgb(240, 245, 250)')};
+
+  & svg path {
+    stroke: ${(props) => (props.active ? '#267e78' : 'rgb(55, 80, 110)')};
+  }
 
   &:hover {
     cursor: pointer;
@@ -45,10 +51,12 @@ const Tab = styled.a`
 const MainPanel = () => {
   console.log('%c MainModal', 'background: #222; color: #00ccff');
 
+  const [panel, setPanel] = useState(0);
+
   return (
     <Root className="converterWrapper">
       <TabContainer>
-        <Tab>
+        <Tab active={panel === 0} onClick={() => setPanel(0)}>
           <MoneyIcon />
           <span
             css={`
@@ -63,7 +71,7 @@ const MainPanel = () => {
             Convert
           </span>
         </Tab>
-        <Tab>
+        <Tab active={panel === 1} onClick={() => setPanel(1)}>
           <ChartIcon />
           <span
             css={`
