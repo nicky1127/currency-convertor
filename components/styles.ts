@@ -70,3 +70,16 @@ export const ConvertPanelGridWrapper = styled.div`
 	grid-template-rows: auto[input-row-start] auto[input-row-end] auto;
 	grid-auto-flow: column;
 `;
+
+export const UnitRatesContainer = styled.div`
+	color: rgb(92, 102, 123);
+	font-size: 1.4rem;
+	text-align: left;
+	margin-bottom: 24px;
+`;
+
+export const SubmitContainer = styled.div`
+	display: flex;
+	margin-top: 24px;
+	justify-content: flex-end;
+`;

@@ -1,13 +1,13 @@
-"use strict";
+'use strict';
 
-import React, { useState, useEffect, useRef } from "react";
-import styled from "styled-components";
+import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
 
-import SwapIcon from "../public/images/convert.svg";
-import InputWrapper from "./InputWrapper";
-import CurrencyWrapper from "./CurrencyWrapper";
-import IconButton from "./IconButton";
-import * as S from "./styles";
+import SwapIcon from '../public/images/convert.svg';
+import InputWrapper from './InputWrapper';
+import CurrencyWrapper from './CurrencyWrapper';
+import IconButton from './IconButton';
+import * as S from './styles';
 
 const Label = styled.label`
   font-size: 1.6rem;
@@ -24,19 +24,15 @@ const ErrorMsg = styled.div`
 `;
 
 const ConvertPanel = () => {
-  console.log("%c ConvertPanel", "background: #222; color: yellow");
+  console.log('%c ConvertPanel', 'background: #222; color: yellow');
 
-  const [amount, setAmount] = useState("");
+  const [amount, setAmount] = useState('');
   const [rate, setRate] = useState(null);
-  const [currencyArr, setCurrencyArr] = useState(["gbp", "twd"]);
-  const [fullNameArr, setFullNameArr] = useState(["", ""]);
-  const [lastUpdated, setLastUpdated] = useState("");
-  const [errMsg, setErrMsg] = useState("");
+  const [currencyArr, setCurrencyArr] = useState(['gbp', 'twd']);
+  const [fullNameArr, setFullNameArr] = useState(['', '']);
+  const [lastUpdated, setLastUpdated] = useState('');
+  const [errMsg, setErrMsg] = useState('');
   const [hideButton, setHideButton] = useState(false);
-  // const [fromCurrency, setFromCurrency] = useState("gbp");
-  // const [toCurrency, setToCurrency] = useState("twd");
-
-  // const value = useRef(1);
 
   console.log(`amount`, amount);
   console.log(`rate`, rate);
@@ -44,9 +40,9 @@ const ConvertPanel = () => {
 
   useEffect(() => {
     if (isNaN(+amount)) {
-      return setErrMsg("Please enter a valid amount");
+      return setErrMsg('Please enter a valid amount');
     }
-    return setErrMsg("");
+    return setErrMsg('');
   }, [amount]);
 
   const handleChange = (evt: React.ChangeEvent<HTMLInputElement>): void => {
@@ -55,27 +51,20 @@ const ConvertPanel = () => {
     }
   };
 
-  const handleClickSwapButton = (
-    evt: React.MouseEvent<HTMLButtonElement>
-  ): void => {
+  const handleClickSwapButton = (evt: React.MouseEvent<HTMLButtonElement>): void => {
     evt.preventDefault();
     evt.stopPropagation();
-    // console.log("==============>function");
-    // console.log(`value.current`, value.current);
     setCurrencyArr(([a, b]) => [b, a]);
     setRate(([a, b]) => [b, a]);
     setFullNameArr(([a, b]) => [b, a]);
-    // value.current = value.current + 1;
   };
 
-  const handleClickConvertButton = (
-    evt: React.MouseEvent<HTMLButtonElement>
-  ): void => {
+  const handleClickConvertButton = (evt: React.MouseEvent<HTMLButtonElement>): void => {
     evt.preventDefault();
     evt.stopPropagation();
 
     if (!amount || isNaN(+amount)) {
-      return setErrMsg("Please enter a valid amount");
+      return setErrMsg('Please enter a valid amount');
     }
 
     fetch(
@@ -89,12 +78,12 @@ const ConvertPanel = () => {
       .then((res) => res.json())
       .then((json) => {
         console.log(`json`, json);
-        const rateObj = json["Realtime Currency Exchange Rate"];
+        const rateObj = json['Realtime Currency Exchange Rate'];
         if (rateObj) {
-          const rate = rateObj["5. Exchange Rate"];
-          const fromCurrency = rateObj["2. From_Currency Name"];
-          const toCurrency = rateObj["4. To_Currency Name"];
-          const time = rateObj["6. Last Refreshed"];
+          const rate = rateObj['5. Exchange Rate'];
+          const fromCurrency = rateObj['2. From_Currency Name'];
+          const toCurrency = rateObj['4. To_Currency Name'];
+          const time = rateObj['6. Last Refreshed'];
           setRate([1, +rate]);
           setFullNameArr([fromCurrency, toCurrency]);
           setLastUpdated(time);
@@ -135,19 +124,12 @@ const ConvertPanel = () => {
 
           <div></div>
           <S.ButtonWrapper>
-            <IconButton
-              icon={<SwapIcon />}
-              handleClick={handleClickSwapButton}
-            />
+            <IconButton icon={<SwapIcon />} handleClick={handleClickSwapButton} />
           </S.ButtonWrapper>
           <div></div>
 
           <Label htmlFor="input-toCurrency">To</Label>
-          <CurrencyWrapper
-            id="input_toCurrency"
-            inputActivated={false}
-            currency={currencyArr[1]}
-          />
+          <CurrencyWrapper id="input_toCurrency" inputActivated={false} currency={currencyArr[1]} />
           <div></div>
         </S.ConvertPanelGridWrapper>
         {hideButton ? (
@@ -164,10 +146,12 @@ const ConvertPanel = () => {
                   font-size: 1.6rem;
                   font-weight: 600;
                 `}
-              >{`${(+amount).toLocaleString("en-US", {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2,
-              })} ${fullNameArr[0]} = `}</p>
+              >
+                {`${(+amount).toLocaleString('en-US', {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2
+                })} ${fullNameArr[0]} = `}
+              </p>
               <p
                 css={`
                   color: rgb(46, 60, 87);
@@ -176,33 +160,27 @@ const ConvertPanel = () => {
                   margin-bottom: 24px;
                 `}
               >
-                {`${((+amount * rate[1]) / rate[0]).toLocaleString("en-US", {
+                {`${((+amount * rate[1]) / rate[0]).toLocaleString('en-US', {
                   minimumFractionDigits: 2,
-                  maximumFractionDigits: 2,
+                  maximumFractionDigits: 2
                 })} ${fullNameArr[1]}`}
               </p>
             </div>
-            <div
-              className="unitRatesContainer"
-              css={`
-                color: rgb(92, 102, 123);
-                font-size: 1.4rem;
-                text-align: left;
-                margin-bottom: 24px;
-              `}
-            >
-              <p>{`1 ${currencyArr[0].toUpperCase()} = ${Number(
-                rate[1] / rate[0]
-              ).toLocaleString("en-US", {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 5,
-              })} ${currencyArr[1].toUpperCase()}`}</p>
-              <p>{`1 ${currencyArr[1].toUpperCase()} = ${Number(
-                rate[0] / rate[1]
-              ).toLocaleString("en-US", {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 5,
-              })} ${currencyArr[0].toUpperCase()}`}</p>
+            <S.UnitRatesContainer className="unitRatesContainer">
+              <p>{`1 ${currencyArr[0].toUpperCase()} = ${Number(rate[1] / rate[0]).toLocaleString(
+                'en-US',
+                {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 5
+                }
+              )} ${currencyArr[1].toUpperCase()}`}</p>
+              <p>{`1 ${currencyArr[1].toUpperCase()} = ${Number(rate[0] / rate[1]).toLocaleString(
+                'en-US',
+                {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 5
+                }
+              )} ${currencyArr[0].toUpperCase()}`}</p>
 
               <p
                 css={`
@@ -210,19 +188,12 @@ const ConvertPanel = () => {
                   font-size: 1.2rem;
                 `}
               >{`Last updated ${lastUpdated}`}</p>
-            </div>
+            </S.UnitRatesContainer>
           </div>
         ) : (
-          <div
-            className="submitContainer"
-            css={`
-              display: flex;
-              margin-top: 24px;
-              justify-content: flex-end;
-            `}
-          >
+          <S.SubmitContainer className="submitContainer">
             <S.Button onClick={handleClickConvertButton}>Convert</S.Button>
-          </div>
+          </S.SubmitContainer>
         )}
       </form>
     </div>
