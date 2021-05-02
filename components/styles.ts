@@ -1,5 +1,4 @@
-
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const Button = styled.button`
   display: inline-flex;
@@ -37,11 +36,10 @@ export const Button = styled.button`
   }
 `;
 
-
 export const Input = styled.input.attrs(() => ({
-	type: "text",
-	inputMode: "decimal",
-	autoComplete: "off",
+  type: 'text',
+  inputMode: 'decimal',
+  autoComplete: 'off'
 }))`
   border: 0px;
   margin: 0px;
@@ -53,7 +51,6 @@ export const Input = styled.input.attrs(() => ({
   }
 `;
 
-
 export const ButtonWrapper = styled.div`
   margin: 0;
   place-self: center;
@@ -61,25 +58,26 @@ export const ButtonWrapper = styled.div`
 `;
 
 export const ConvertPanelGridWrapper = styled.div`
-	display: grid;
-	gap: 4px 16px;
-	grid-template-columns: minmax(100px, 1fr) minmax(100px, 1fr) auto minmax(
-		100px,
-		1fr
-	);
-	grid-template-rows: auto[input-row-start] auto[input-row-end] auto;
-	grid-auto-flow: column;
+  display: 'flex';
+  flex-direction: 'column';
+  @media (min-width: 576px) {
+    display: grid;
+    gap: 4px 16px;
+    grid-template-columns: minmax(100px, 1fr) minmax(100px, 1fr) auto minmax(100px, 1fr);
+    grid-template-rows: auto[input-row-start] auto[input-row-end] auto;
+    grid-auto-flow: column;
+  }
 `;
 
 export const UnitRatesContainer = styled.div`
-	color: rgb(92, 102, 123);
-	font-size: 1.4rem;
-	text-align: left;
-	margin-bottom: 24px;
+  color: rgb(92, 102, 123);
+  font-size: 1.4rem;
+  text-align: left;
+  margin-bottom: 24px;
 `;
 
 export const SubmitContainer = styled.div`
-	display: flex;
-	margin-top: 24px;
-	justify-content: flex-end;
+  display: flex;
+  margin-top: 24px;
+  justify-content: flex-end;
 `;
