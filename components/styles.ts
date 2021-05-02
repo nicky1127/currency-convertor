@@ -56,6 +56,17 @@ export const Input = styled.input.attrs(() => ({
 
 export const ButtonWrapper = styled.div`
   margin: 0;
-             place-self: center;
-              display: flex;
+  place-self: center;
+  display: flex;
+`;
+
+export const ConvertPanelGridWrapper = styled.div`
+	display: grid;
+	gap: 4px 16px;
+	grid-template-columns: minmax(100px, 1fr) minmax(100px, 1fr) auto minmax(
+		100px,
+		1fr
+	);
+	grid-template-rows: auto[input-row-start] auto[input-row-end] auto;
+	grid-auto-flow: column;
 `;

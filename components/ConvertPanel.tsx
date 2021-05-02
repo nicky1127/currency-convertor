@@ -115,18 +115,7 @@ const ConvertPanel = () => {
       `}
     >
       <form>
-        <div
-          css={`
-            display: grid;
-            gap: 4px 16px;
-            grid-template-columns: minmax(100px, 1fr) minmax(100px, 1fr) auto minmax(
-                100px,
-                1fr
-              );
-            grid-template-rows: auto [input-row-start] auto [input-row-end] auto;
-            grid-auto-flow: column;
-          `}
-        >
+        <S.ConvertPanelGridWrapper>
           <Label htmlFor="input_amount">Amount</Label>
           <InputWrapper
             id="input_amount"
@@ -160,7 +149,7 @@ const ConvertPanel = () => {
             currency={currencyArr[1]}
           />
           <div></div>
-        </div>
+        </S.ConvertPanelGridWrapper>
         {hideButton ? (
           <div className="resultContainer">
             <div
