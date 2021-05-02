@@ -38,6 +38,14 @@ const Tab = styled.a<{ active: boolean }>`
     stroke: ${(props) => (props.active ? '#267e78' : 'rgb(55, 80, 110)')};
   }
 
+  &:first-child {
+    border-top-left-radius: 8px;
+  }
+
+  &:last-child {
+    border-top-right-radius: 8px;
+  }
+
   &:hover {
     cursor: pointer;
     opacity: 0.5;
