@@ -21,7 +21,7 @@ export default function Home() {
     <div>
       <Head>
         <title>TWD Convertor</title>
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/favicon_2.png" />
       </Head>
       <Wrapper className="appWrapper">
         <BgContainer colour="#0a2239" />
