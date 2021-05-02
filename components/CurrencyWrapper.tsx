@@ -1,8 +1,8 @@
-"use strict";
-import React from "react";
-import styled from "styled-components";
+'use strict';
+import React from 'react';
+import styled from 'styled-components';
 
-import * as S from "./styles";
+import * as S from './styles';
 
 interface currency {
   code: string;
@@ -16,15 +16,15 @@ interface currencyMap {
 
 const currencyMap: Record<string, currency> = {
   gbp: {
-    code: "GBP",
-    name: "British Pound",
-    src: "/images/gbp.svg",
+    code: 'GBP',
+    name: 'British Pound',
+    src: '/images/gbp.svg'
   },
   twd: {
-    code: "TWD",
-    name: "Taiwan New Dollar",
-    src: "/images/twd.svg",
-  },
+    code: 'TWD',
+    name: 'Taiwan New Dollar',
+    src: '/images/twd.svg'
+  }
 };
 
 // const currencyMap: currencyMap = {
@@ -41,16 +41,15 @@ const currencyMap: Record<string, currency> = {
 // };
 
 const CurrencySelection = styled.div.attrs((props) => ({
-  id: "fromCurrency-selection",
-  className: "currency-wrapper",
+  id: 'fromCurrency-selection',
+  className: 'currency-wrapper'
 }))<{ inputActivated: boolean }>`
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
   height: 100%;
-  visibility: ${({ inputActivated }) =>
-    inputActivated ? "hidden" : "visible"};
+  visibility: ${({ inputActivated }) => (inputActivated ? 'hidden' : 'visible')};
   border: 1px solid rgb(221, 221, 221);
   border-radius: 6px;
   box-shadow: rgb(0 17 51 / 5%) 0px 3px 15px;
@@ -64,7 +63,7 @@ const CurrencySelection = styled.div.attrs((props) => ({
 `;
 
 const InputWrapper = styled.div.attrs((props) => ({
-  className: "inputWrapper",
+  className: 'inputWrapper'
 }))`
   display: flex;
   align-items: center;
@@ -78,7 +77,7 @@ const InputWrapper = styled.div.attrs((props) => ({
 const Input = styled.input<{ inputActivated: boolean }>`
   width: 100%;
   height: 100%;
-  color: ${({ inputActivated }) => !inputActivated && "transparant"};
+  color: ${({ inputActivated }) => !inputActivated && 'transparant'};
   border-color: transparent;
   box-shadow: none;
   padding-right: 40px;

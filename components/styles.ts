@@ -36,6 +36,14 @@ export const Button = styled.button`
   }
 `;
 
+export const ConvertButton = styled(Button)`
+  width: 100%;
+
+  @media (min-width: 576px) {
+    width: auto;
+  }
+`;
+
 export const Input = styled.input.attrs(() => ({
   type: 'text',
   inputMode: 'decimal',
@@ -51,15 +59,19 @@ export const Input = styled.input.attrs(() => ({
   }
 `;
 
-export const ButtonWrapper = styled.div`
-  margin: 0;
-  place-self: center;
+export const SwapButtonContainer = styled.div`
+  @media (min-width: 576px) {
+    margin: 0;
+    place-self: center;
+  }
   display: flex;
+  justify-content: space-between;
+  margin: 16px 0 -8px;
 `;
 
 export const ConvertPanelGridWrapper = styled.div`
-  display: 'flex';
-  flex-direction: 'column';
+  display: flex;
+  flex-direction: column;
   @media (min-width: 576px) {
     display: grid;
     gap: 4px 16px;

@@ -10,11 +10,20 @@ import IconButton from './IconButton';
 import * as S from './styles';
 
 const Label = styled.label`
+  display: inline-block;
+  align-self: flex-start;
+  margin: 24px 0 4px;
   font-size: 1.6rem;
   font-weight: 600;
   color: rgb(20, 30, 55);
   &::selection {
     background-color: rgb(181, 215, 253);
+  }
+  &:first-child {
+    margin-top: 0;
+  }
+  @media (min-width: 576px) {
+    margin: 0;
   }
 `;
 
@@ -98,9 +107,13 @@ const ConvertPanel = () => {
       css={`
         flex: 1 1 0;
         /* background-color: #fff; */
-        padding: 48px;
+        padding: 24px;
         box-sizing: border-box;
         width: 100%;
+
+        @media (min-width: 768px) {
+          padding: 48px;
+        }
       `}
     >
       <form>
@@ -112,7 +125,7 @@ const ConvertPanel = () => {
             amount={amount}
             handleChange={handleChange}
           />
-          <ErrorMsg>{errMsg}</ErrorMsg>
+          <ErrorMsg aria-live="assertive">{errMsg}</ErrorMsg>
 
           <Label htmlFor="input_fromCurrency">From</Label>
           <CurrencyWrapper
@@ -123,78 +136,80 @@ const ConvertPanel = () => {
           <div></div>
 
           <div></div>
-          <S.ButtonWrapper>
+          <S.SwapButtonContainer>
             <IconButton icon={<SwapIcon />} handleClick={handleClickSwapButton} />
-          </S.ButtonWrapper>
+          </S.SwapButtonContainer>
           <div></div>
 
           <Label htmlFor="input-toCurrency">To</Label>
           <CurrencyWrapper id="input_toCurrency" inputActivated={false} currency={currencyArr[1]} />
           <div></div>
         </S.ConvertPanelGridWrapper>
-        {hideButton ? (
-          <div className="resultContainer">
-            <div
-              className="figureContainer"
-              css={`
-                margin-top: 24px;
-              `}
-            >
-              <p
-                css={`
-                  color: rgb(92, 102, 123);
-                  font-size: 1.6rem;
-                  font-weight: 600;
-                `}
-              >
-                {`${(+amount).toLocaleString('en-US', {
-                  minimumFractionDigits: 2,
-                  maximumFractionDigits: 2
-                })} ${fullNameArr[0]} = `}
-              </p>
-              <p
-                css={`
-                  color: rgb(46, 60, 87);
-                  font-size: 3rem;
-                  font-weight: 600;
-                  margin-bottom: 24px;
-                `}
-              >
-                {`${((+amount * rate[1]) / rate[0]).toLocaleString('en-US', {
-                  minimumFractionDigits: 2,
-                  maximumFractionDigits: 2
-                })} ${fullNameArr[1]}`}
-              </p>
-            </div>
-            <S.UnitRatesContainer className="unitRatesContainer">
-              <p>{`1 ${currencyArr[0].toUpperCase()} = ${Number(rate[1] / rate[0]).toLocaleString(
-                'en-US',
-                {
-                  minimumFractionDigits: 2,
-                  maximumFractionDigits: 5
-                }
-              )} ${currencyArr[1].toUpperCase()}`}</p>
-              <p>{`1 ${currencyArr[1].toUpperCase()} = ${Number(rate[0] / rate[1]).toLocaleString(
-                'en-US',
-                {
-                  minimumFractionDigits: 2,
-                  maximumFractionDigits: 5
-                }
-              )} ${currencyArr[0].toUpperCase()}`}</p>
+        <div
+          className="resultContainer"
+          css={`
+            margin-top: 24px;
+          `}
+        >
+          {hideButton ? (
+            <>
+              <div className="figureContainer">
+                <p
+                  css={`
+                    color: rgb(92, 102, 123);
+                    font-size: 1.6rem;
+                    font-weight: 600;
+                  `}
+                >
+                  {`${(+amount).toLocaleString('en-US', {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                  })} ${fullNameArr[0]} = `}
+                </p>
+                <p
+                  css={`
+                    color: rgb(46, 60, 87);
+                    font-size: 3rem;
+                    font-weight: 600;
+                    margin-bottom: 24px;
+                  `}
+                >
+                  {`${((+amount * rate[1]) / rate[0]).toLocaleString('en-US', {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                  })} ${fullNameArr[1]}`}
+                </p>
+              </div>
+              <S.UnitRatesContainer className="unitRatesContainer">
+                <p>{`1 ${currencyArr[0].toUpperCase()} = ${Number(rate[1] / rate[0]).toLocaleString(
+                  'en-US',
+                  {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 5
+                  }
+                )} ${currencyArr[1].toUpperCase()}`}</p>
+                <p>{`1 ${currencyArr[1].toUpperCase()} = ${Number(rate[0] / rate[1]).toLocaleString(
+                  'en-US',
+                  {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 5
+                  }
+                )} ${currencyArr[0].toUpperCase()}`}</p>
 
-              <p
-                css={`
-                  margin-top: 12px;
-                  font-size: 1.2rem;
-                `}
-              >{`Last updated ${lastUpdated}`}</p>
-            </S.UnitRatesContainer>
-          </div>
-        ) : (
-          <S.SubmitContainer className="submitContainer">
-            <S.Button onClick={handleClickConvertButton}>Convert</S.Button>
-          </S.SubmitContainer>
-        )}
+                <p
+                  css={`
+                    margin-top: 12px;
+                    font-size: 1.2rem;
+                  `}
+                >{`Last updated ${lastUpdated}`}</p>
+              </S.UnitRatesContainer>
+            </>
+          ) : (
+            <S.SubmitContainer className="submitContainer">
+              <S.ConvertButton onClick={handleClickConvertButton}>Convert</S.ConvertButton>
+            </S.SubmitContainer>
+          )}
+        </div>
       </form>
     </div>
   );
