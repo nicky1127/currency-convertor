@@ -23,16 +23,16 @@ export const Button = styled.button`
     border-color: #38bcb4;
     box-shadow: rgb(20 30 55 / 70%) 0px 2px 4px 0px;
   }
-  &:active {
-    background: #267e78;
-    border-color: #267e78;
-    box-shadow: rgb(0 113 235 / 50%) 0px 0px 0px 4px;
-  }
   &:focus {
     background: #38bcb4;
     border-color: #38bcb4;
     box-shadow: rgb(20 30 55 / 70%) 0px 2px 4px 0px;
     outline: none;
+  }
+  &:active {
+    background: #267e78;
+    border-color: #267e78;
+    box-shadow: rgb(0 113 235 / 50%) 0px 0px 0px 4px;
   }
 `;
 

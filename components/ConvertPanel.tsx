@@ -64,7 +64,7 @@ const ConvertPanel = () => {
     evt.preventDefault();
     evt.stopPropagation();
     setCurrencyArr(([a, b]) => [b, a]);
-    setRate(([a, b]) => [b, a]);
+    rate && setRate(([a, b]) => [b, a]);
     setFullNameArr(([a, b]) => [b, a]);
   };
 
