@@ -42,6 +42,8 @@ const ConvertPanel = () => {
   const [lastUpdated, setLastUpdated] = useState('');
   const [errMsg, setErrMsg] = useState('');
   const [hideButton, setHideButton] = useState(false);
+  const [containerVisibility, setContainerVisibility] = useState('hidden');
+  const [containerOpacity, setContainerOpacity] = useState(0);
 
   console.log(`amount`, amount);
   console.log(`rate`, rate);
@@ -57,6 +59,10 @@ const ConvertPanel = () => {
   const handleChange = (evt: React.ChangeEvent<HTMLInputElement>): void => {
     if (evt.target.name) {
       setAmount(evt.target.value);
+      setContainerOpacity(0);
+      setTimeout(() => {
+        setContainerOpacity(1);
+      }, 200);
     }
   };
 
@@ -93,9 +99,19 @@ const ConvertPanel = () => {
           const fromCurrency = rateObj['2. From_Currency Name'];
           const toCurrency = rateObj['4. To_Currency Name'];
           const time = rateObj['6. Last Refreshed'];
-          setRate([1, +rate]);
+          setTimeout(() => {
+            setRate([1, +rate]);
+          }, 200);
           setFullNameArr([fromCurrency, toCurrency]);
           setLastUpdated(time);
+          setContainerVisibility('hidden');
+          setTimeout(() => {
+            setContainerVisibility('visible');
+          }, 200);
+          setContainerOpacity(0);
+          setTimeout(() => {
+            setContainerOpacity(1);
+          }, 200);
         }
 
         setHideButton(true);
@@ -145,72 +161,88 @@ const ConvertPanel = () => {
           <CurrencyWrapper id="input_toCurrency" inputActivated={false} currency={currencyArr[1]} />
           <div></div>
         </S.ConvertPanelGridWrapper>
-        <div
-          className="resultContainer"
-          css={`
-            margin-top: 24px;
-          `}
-        >
-          {hideButton ? (
-            <>
-              <div className="figureContainer">
-                <p
-                  css={`
-                    color: rgb(92, 102, 123);
-                    font-size: 1.6rem;
-                    font-weight: 600;
-                  `}
-                >
-                  {`${(+amount).toLocaleString('en-US', {
+        {hideButton ? (
+          <div
+            className="resultContainer"
+            css={`
+              margin-top: 24px;
+              opacity: ${containerOpacity};
+              transition: opacity 0.5s ease 0s;
+            `}
+          >
+            <div
+              className="figureContainer"
+              css={`
+                height: ${rate ? 'auto' : 0};
+                overflow: visible;
+                visibility: ${containerVisibility};
+                transition: height 1s ease 0s, visibility 2s ease 0s;
+              `}
+            >
+              <p
+                css={`
+                  color: rgb(92, 102, 123);
+                  font-size: 1.6rem;
+                  font-weight: 600;
+                `}
+              >
+                {`${(+amount).toLocaleString('en-US', {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2
+                })} ${fullNameArr[0]} = `}
+              </p>
+              <p
+                css={`
+                  color: rgb(46, 60, 87);
+                  font-size: 3rem;
+                  font-weight: 600;
+                  margin-bottom: 24px;
+                `}
+              >
+                {`${
+                  rate &&
+                  ((+amount * rate[1]) / rate[0]).toLocaleString('en-US', {
                     minimumFractionDigits: 2,
                     maximumFractionDigits: 2
-                  })} ${fullNameArr[0]} = `}
-                </p>
-                <p
-                  css={`
-                    color: rgb(46, 60, 87);
-                    font-size: 3rem;
-                    font-weight: 600;
-                    margin-bottom: 24px;
-                  `}
-                >
-                  {`${((+amount * rate[1]) / rate[0]).toLocaleString('en-US', {
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2
-                  })} ${fullNameArr[1]}`}
-                </p>
-              </div>
+                  })
+                } ${fullNameArr[1]}`}
+              </p>
+            </div>
 
-              <S.UnitRatesContainer className="unitRatesContainer">
-                <p>{`1 ${currencyArr[0].toUpperCase()} = ${Number(rate[1] / rate[0]).toLocaleString(
-                  'en-US',
-                  {
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 5
-                  }
-                )} ${currencyArr[1].toUpperCase()}`}</p>
-                <p>{`1 ${currencyArr[1].toUpperCase()} = ${Number(rate[0] / rate[1]).toLocaleString(
-                  'en-US',
-                  {
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 5
-                  }
-                )} ${currencyArr[0].toUpperCase()}`}</p>
+            <S.UnitRatesContainer className="unitRatesContainer">
+              <p>{`1 ${currencyArr[0].toUpperCase()} = ${
+                rate &&
+                Number(rate[1] / rate[0]).toLocaleString('en-US', {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 5
+                })
+              } ${currencyArr[1].toUpperCase()}`}</p>
+              <p>{`1 ${currencyArr[1].toUpperCase()} = ${
+                rate &&
+                Number(rate[0] / rate[1]).toLocaleString('en-US', {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 5
+                })
+              } ${currencyArr[0].toUpperCase()}`}</p>
 
-                <p
-                  css={`
-                    margin-top: 12px;
-                    font-size: 1.2rem;
-                  `}
-                >{`Last updated ${lastUpdated}`}</p>
-              </S.UnitRatesContainer>
-            </>
-          ) : (
-            <S.SubmitContainer className="submitContainer">
-              <S.ConvertButton onClick={handleClickConvertButton}>Convert</S.ConvertButton>
-            </S.SubmitContainer>
-          )}
-        </div>
+              <p
+                css={`
+                  margin-top: 12px;
+                  font-size: 1.2rem;
+                `}
+              >{`Last updated ${lastUpdated}`}</p>
+            </S.UnitRatesContainer>
+          </div>
+        ) : (
+          <S.SubmitContainer
+            className="submitContainer"
+            css={`
+              margin-top: 24px;
+            `}
+          >
+            <S.ConvertButton onClick={handleClickConvertButton}>Convert</S.ConvertButton>
+          </S.SubmitContainer>
+        )}
       </form>
     </div>
   );
