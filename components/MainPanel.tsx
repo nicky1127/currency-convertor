@@ -1,7 +1,9 @@
-import React, { useState } from "react";
-import styled from "styled-components";
+import React, { useState } from 'react';
+import styled from 'styled-components';
 
-import ConvertPanel from "./ConvertPanel";
+import ConvertPanel from './ConvertPanel';
+import MoneyIcon from '../public/images/icon_money.svg';
+import ChartIcon from '../public/images/icon_chart.svg';
 
 const Root = styled.div`
   /* display: flex; */
@@ -24,19 +26,57 @@ const Tab = styled.a`
   display: inline-flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
+  padding: 4px;
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #267e78;
+
+  &:hover {
+    cursor: pointer;
+    opacity: 0.5;
+  }
+
+  @media (min-width: 480px) {
+    flex-direction: row;
+  }
 `;
 
 const MainPanel = () => {
-  console.log("%c MainModal", "background: #222; color: #00ccff");
+  console.log('%c MainModal', 'background: #222; color: #00ccff');
 
   return (
     <Root className="converterWrapper">
       <TabContainer>
         <Tab>
-          <span>Convert</span>
+          <MoneyIcon />
+          <span
+            css={`
+              max-width: 100%;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              @media (min-width: 480px) {
+                margin-left: 8px;
+              }
+            `}
+          >
+            Convert
+          </span>
         </Tab>
         <Tab>
-          <span>Charts</span>
+          <ChartIcon />
+          <span
+            css={`
+              max-width: 100%;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              @media (min-width: 480px) {
+                margin-left: 8px;
+              }
+            `}
+          >
+            Charts
+          </span>
         </Tab>
       </TabContainer>
       <ConvertPanel />
