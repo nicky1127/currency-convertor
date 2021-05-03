@@ -57,7 +57,7 @@ const Tab = styled.a<{ active: boolean }>`
 `;
 
 const MainPanel = () => {
-  console.log('%c MainModal', 'background: #222; color: #00ccff');
+  // console.log('%c MainModal', 'background: #222; color: #00ccff');
 
   const [panel, setPanel] = useState(0);
 

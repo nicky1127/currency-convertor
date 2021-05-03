@@ -1,10 +1,10 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
 
-import * as S from "./styles";
+import * as S from './styles';
 
 const Root = styled.div.attrs((props) => ({
-  className: "inputWrapper",
+  className: 'inputWrapper'
 }))`
   display: flex;
   align-items: center;

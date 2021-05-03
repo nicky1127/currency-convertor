@@ -1,13 +1,33 @@
 'use strict';
 
 import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
 import SwapIcon from '../public/images/convert.svg';
 import InputWrapper from './InputWrapper';
 import CurrencyWrapper from './CurrencyWrapper';
 import IconButton from './IconButton';
 import * as S from './styles';
+
+const fadeIn = keyframes`
+  0% {
+    opacity: 0;
+  }
+	100% {
+    opacity: 1;
+  }
+`;
+
+const growHeight = keyframes`
+  0% {
+    /* height: 0; */
+    visibility: hidden;
+  }
+  100% {
+    /* height: auto; */
+    visibility: visible;
+  }
+`;
 
 const Label = styled.label`
   display: inline-block;
@@ -33,7 +53,7 @@ const ErrorMsg = styled.div`
 `;
 
 const ConvertPanel = () => {
-  console.log('%c ConvertPanel', 'background: #222; color: yellow');
+  // console.log('%c ConvertPanel', 'background: #222; color: yellow');
 
   const [amount, setAmount] = useState('');
   const [rate, setRate] = useState(null);
@@ -42,12 +62,9 @@ const ConvertPanel = () => {
   const [lastUpdated, setLastUpdated] = useState('');
   const [errMsg, setErrMsg] = useState('');
   const [hideButton, setHideButton] = useState(false);
-  const [containerVisibility, setContainerVisibility] = useState('hidden');
-  const [containerOpacity, setContainerOpacity] = useState(0);
-
-  console.log(`amount`, amount);
-  console.log(`rate`, rate);
-  console.log(`fullNameArr`, fullNameArr);
+  const [animeOnResult, setAnimeOnResult] = useState(true);
+  // const [containerVisibility, setContainerVisibility] = useState('hidden');
+  // const [containerOpacity, setContainerOpacity] = useState(0);
 
   useEffect(() => {
     if (isNaN(+amount)) {
@@ -59,10 +76,11 @@ const ConvertPanel = () => {
   const handleChange = (evt: React.ChangeEvent<HTMLInputElement>): void => {
     if (evt.target.name) {
       setAmount(evt.target.value);
-      setContainerOpacity(0);
-      setTimeout(() => {
-        setContainerOpacity(1);
-      }, 200);
+      setAnimeOnResult(true);
+      // setContainerOpacity(0);
+      // setTimeout(() => {
+      //   setContainerOpacity(1);
+      // }, 200);
     }
   };
 
@@ -104,14 +122,15 @@ const ConvertPanel = () => {
           }, 200);
           setFullNameArr([fromCurrency, toCurrency]);
           setLastUpdated(time);
-          setContainerVisibility('hidden');
-          setTimeout(() => {
-            setContainerVisibility('visible');
-          }, 200);
-          setContainerOpacity(0);
-          setTimeout(() => {
-            setContainerOpacity(1);
-          }, 200);
+          setAnimeOnResult(true);
+          // setContainerVisibility('hidden');
+          // setTimeout(() => {
+          //   setContainerVisibility('visible');
+          // }, 200);
+          // setContainerOpacity(0);
+          // setTimeout(() => {
+          //   setContainerOpacity(1);
+          // }, 200);
         }
 
         setHideButton(true);
@@ -132,118 +151,122 @@ const ConvertPanel = () => {
         }
       `}
     >
-      <form>
-        <S.ConvertPanelGridWrapper>
-          <Label htmlFor="input_amount">Amount</Label>
-          <InputWrapper
-            id="input_amount"
-            name="amount"
-            amount={amount}
-            handleChange={handleChange}
-          />
-          <ErrorMsg aria-live="assertive">{errMsg}</ErrorMsg>
+      {/* <form> */}
+      <S.ConvertPanelGridWrapper>
+        <Label htmlFor="input_amount">Amount</Label>
+        <InputWrapper id="input_amount" name="amount" amount={amount} handleChange={handleChange} />
+        <ErrorMsg aria-live="assertive">{errMsg}</ErrorMsg>
 
-          <Label htmlFor="input_fromCurrency">From</Label>
-          <CurrencyWrapper
-            id="input_fromCurrency"
-            inputActivated={false}
-            currency={currencyArr[0]}
-          />
-          <div></div>
+        <Label htmlFor="input_fromCurrency">From</Label>
+        <CurrencyWrapper id="input_fromCurrency" inputActivated={false} currency={currencyArr[0]} />
+        <div></div>
 
-          <div></div>
-          <S.SwapButtonContainer>
-            <IconButton icon={<SwapIcon />} handleClick={handleClickSwapButton} />
-          </S.SwapButtonContainer>
-          <div></div>
+        <div></div>
+        <S.SwapButtonContainer>
+          <IconButton icon={<SwapIcon />} handleClick={handleClickSwapButton} />
+        </S.SwapButtonContainer>
+        <div></div>
 
-          <Label htmlFor="input-toCurrency">To</Label>
-          <CurrencyWrapper id="input_toCurrency" inputActivated={false} currency={currencyArr[1]} />
-          <div></div>
-        </S.ConvertPanelGridWrapper>
-        {hideButton ? (
+        <Label htmlFor="input-toCurrency">To</Label>
+        <CurrencyWrapper id="input_toCurrency" inputActivated={false} currency={currencyArr[1]} />
+        <div></div>
+      </S.ConvertPanelGridWrapper>
+      {hideButton ? (
+        <div
+          key={amount}
+          id="happy"
+          className="resultContainer"
+          onAnimationEnd={() => {
+            setAnimeOnResult(false);
+          }}
+          css={`
+            margin-top: 24px;
+            animation: ${animeOnResult && fadeIn} ease 1s;
+            /* opacity: containerOpacity;
+              transition: opacity 0.5s ease 0s; */
+          `}
+        >
           <div
-            className="resultContainer"
+            className="figureContainer"
             css={`
-              margin-top: 24px;
-              opacity: ${containerOpacity};
-              transition: opacity 0.5s ease 0s;
+              //* option1
+              height: auto;
+              overflow: visible;
+              visibility: visible;
+              animation: ${growHeight} ease 1s;
+              //* option2
+              /* height: ${rate ? 'auto' : 0}; */
+              /* overflow: visible;
+                visibility: containerVisibility;
+								
+                transition: height 1s ease 0s, visibility 2s ease 0s; */
             `}
           >
-            <div
-              className="figureContainer"
+            <p
               css={`
-                height: ${rate ? 'auto' : 0};
-                overflow: visible;
-                visibility: ${containerVisibility};
-                transition: height 1s ease 0s, visibility 2s ease 0s;
+                color: rgb(92, 102, 123);
+                font-size: 1.6rem;
+                font-weight: 600;
               `}
             >
-              <p
-                css={`
-                  color: rgb(92, 102, 123);
-                  font-size: 1.6rem;
-                  font-weight: 600;
-                `}
-              >
-                {`${(+amount).toLocaleString('en-US', {
+              {`${(+amount).toLocaleString('en-US', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+              })} ${fullNameArr[0]} = `}
+            </p>
+            <p
+              css={`
+                color: rgb(46, 60, 87);
+                font-size: 3rem;
+                font-weight: 600;
+                margin-bottom: 24px;
+              `}
+            >
+              {`${
+                rate &&
+                ((+amount * rate[1]) / rate[0]).toLocaleString('en-US', {
                   minimumFractionDigits: 2,
                   maximumFractionDigits: 2
-                })} ${fullNameArr[0]} = `}
-              </p>
-              <p
-                css={`
-                  color: rgb(46, 60, 87);
-                  font-size: 3rem;
-                  font-weight: 600;
-                  margin-bottom: 24px;
-                `}
-              >
-                {`${
-                  rate &&
-                  ((+amount * rate[1]) / rate[0]).toLocaleString('en-US', {
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2
-                  })
-                } ${fullNameArr[1]}`}
-              </p>
-            </div>
-
-            <S.UnitRatesContainer className="unitRatesContainer">
-              <p>{`1 ${currencyArr[0].toUpperCase()} = ${
-                rate &&
-                Number(rate[1] / rate[0]).toLocaleString('en-US', {
-                  minimumFractionDigits: 2,
-                  maximumFractionDigits: 5
                 })
-              } ${currencyArr[1].toUpperCase()}`}</p>
-              <p>{`1 ${currencyArr[1].toUpperCase()} = ${
-                rate &&
-                Number(rate[0] / rate[1]).toLocaleString('en-US', {
-                  minimumFractionDigits: 2,
-                  maximumFractionDigits: 5
-                })
-              } ${currencyArr[0].toUpperCase()}`}</p>
-
-              <p
-                css={`
-                  margin-top: 12px;
-                  font-size: 1.2rem;
-                `}
-              >{`Last updated ${lastUpdated}`}</p>
-            </S.UnitRatesContainer>
+              } ${fullNameArr[1]}`}
+            </p>
           </div>
-        ) : (
-          <S.SubmitContainer
-            className="submitContainer"
-            css={`
-              margin-top: 24px;
-            `}
-          >
-            <S.ConvertButton onClick={handleClickConvertButton}>Convert</S.ConvertButton>
-          </S.SubmitContainer>
-        )}
-      </form>
+
+          <S.UnitRatesContainer className="unitRatesContainer">
+            <p>{`1 ${currencyArr[0].toUpperCase()} = ${
+              rate &&
+              Number(rate[1] / rate[0]).toLocaleString('en-US', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 5
+              })
+            } ${currencyArr[1].toUpperCase()}`}</p>
+            <p>{`1 ${currencyArr[1].toUpperCase()} = ${
+              rate &&
+              Number(rate[0] / rate[1]).toLocaleString('en-US', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 5
+              })
+            } ${currencyArr[0].toUpperCase()}`}</p>
+
+            <p
+              css={`
+                margin-top: 12px;
+                font-size: 1.2rem;
+              `}
+            >{`Last updated ${lastUpdated}`}</p>
+          </S.UnitRatesContainer>
+        </div>
+      ) : (
+        <S.SubmitContainer
+          className="submitContainer"
+          css={`
+            margin-top: 24px;
+          `}
+        >
+          <S.ConvertButton onClick={handleClickConvertButton}>Convert</S.ConvertButton>
+        </S.SubmitContainer>
+      )}
+      {/* </form> */}
     </div>
   );
 };
