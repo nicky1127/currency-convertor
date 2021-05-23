@@ -1,7 +1,7 @@
-import Head from "next/head";
-import styles from "../styles/Home.module.css";
-import styled from "styled-components";
-import ContentWrapper from "../components/ContentWrapper";
+import Head from 'next/head';
+import styles from '../styles/Home.module.css';
+import styled from 'styled-components';
+import ContentWrapper from '../components/ContentWrapper';
 
 const Wrapper = styled.div`
   width: 100%;

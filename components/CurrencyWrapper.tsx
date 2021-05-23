@@ -2,6 +2,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import CurrencyOption from './CurrencyOption';
+
 import * as S from './styles';
 
 interface currency {
@@ -77,13 +79,13 @@ const InputWrapper = styled.div.attrs((props) => ({
 const Input = styled.input<{ inputActivated: boolean }>`
   width: 100%;
   height: 100%;
-  color: ${({ inputActivated }) => !inputActivated && 'transparant'};
+  border: 1px solid rgb(221, 221, 221);
+  color: ${({ inputActivated }) => !inputActivated && 'transparent'};
   border-color: transparent;
   box-shadow: none;
   padding-right: 40px;
   cursor: pointer;
   background: none;
-  border: 1px solid rgb(221, 221, 221);
   border-radius: 6px;
   padding: 12px;
 
@@ -109,6 +111,7 @@ const CurrencyWrapper = ({ id, currency, inputActivated }: props) => {
       css={`
         display: inline-block;
         position: relative;
+        height: 100%;
       `}
     >
       <CurrencySelection inputActivated={inputActivated}>
@@ -165,9 +168,45 @@ const CurrencyWrapper = ({ id, currency, inputActivated }: props) => {
           </div>
         </div>
       </CurrencySelection>
-      <InputWrapper id="input-fromCurrency">
-        <Input id={id} inputActivated={inputActivated} />
+      <InputWrapper
+        id={`${id}_inputWrapper`}
+        css={`
+          height: 100%;
+          position: absolute;
+          left: 0;
+          top: 0;
+          display: flex;
+          flex-direction: column;
+        `}
+      >
+        <Input id={`${id}_input`} inputActivated={inputActivated} />
       </InputWrapper>
+      <ul
+        id={`${id}_listbox`}
+        role="listbox"
+        css={`
+          width: 100%;
+          position: absolute;
+          left: 0;
+          top: 100%;
+          z-index: 10;
+          overflow: auto;
+          max-height: 300px;
+          margin-top: 8px;
+          border-radius: 8px;
+          box-shadow: rgb(0 17 51 / 10%) 0px 10px 40px;
+          background-color: rgb(255, 255, 255);
+        `}
+      >
+        {Object.values(currencyMap).map((currency, idx) => (
+          <CurrencyOption
+            id={`${id}_-option-${idx}`}
+            imgSrc={currency.src}
+            code={currency.code}
+            name={currency.name}
+          />
+        ))}
+      </ul>
     </div>
   );
 };
