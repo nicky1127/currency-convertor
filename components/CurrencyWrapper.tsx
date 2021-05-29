@@ -4,6 +4,8 @@ import styled from 'styled-components';
 
 import CurrencyOption from './CurrencyOption';
 
+import ArrowIcon from '../public/images/select_arrow.svg';
+
 import * as S from './styles';
 
 interface currency {
@@ -21,6 +23,11 @@ const currencyMap: Record<string, currency> = {
     code: 'GBP',
     name: 'British Pound',
     src: '/images/gbp.svg'
+  },
+  usd: {
+    code: 'USD',
+    name: 'US Dollar',
+    src: '/images/usd.svg'
   },
   twd: {
     code: 'TWD',
@@ -166,6 +173,34 @@ const CurrencyWrapper = ({ id, currency, inputActivated }: props) => {
             </span>
             {currencyMap[currency].name}
           </div>
+          <button
+            css={`
+              position: absolute;
+              right: 6px;
+
+              display: inline-flex;
+              -webkit-box-align: center;
+              align-items: center;
+              -webkit-box-pack: center;
+              justify-content: center;
+              appearance: none;
+              border: 0px;
+              border-radius: 50%;
+              padding: 0px;
+              margin: 0px;
+              background: none;
+              color: currentcolor;
+            `}
+          >
+            <ArrowIcon
+              css={`
+                width: 1em;
+                height: 0.6em;
+                color: currentcolor;
+                flex-shrink: 0;
+              `}
+            />
+          </button>
         </div>
       </CurrencySelection>
       <InputWrapper
@@ -176,7 +211,7 @@ const CurrencyWrapper = ({ id, currency, inputActivated }: props) => {
           left: 0;
           top: 0;
           display: flex;
-          flex-direction: column;
+          align-items: center;
         `}
       >
         <Input id={`${id}_input`} inputActivated={inputActivated} />
@@ -193,7 +228,7 @@ const CurrencyWrapper = ({ id, currency, inputActivated }: props) => {
           overflow: auto;
           max-height: 300px;
           margin-top: 8px;
-          border-radius: 8px;
+          border-radius: 0 0 8px 8px;
           box-shadow: rgb(0 17 51 / 10%) 0px 10px 40px;
           background-color: rgb(255, 255, 255);
         `}

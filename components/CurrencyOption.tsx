@@ -26,6 +26,10 @@ const CurrencyOption = (props: props) => {
         &[aria-selected='true'] {
           background-color: rgb(250, 251, 253);
         }
+
+        &:hover {
+          background-color: #d9d9d9;
+        }
       `}
     >
       <div

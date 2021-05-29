@@ -1,12 +1,12 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
 
-import MainPanel from "./MainPanel";
+import MainPanel from './MainPanel';
 
 const Root = styled.div`
   width: 100%;
   margin: 0 auto;
-  max-width: 1000px;
+  max-width: 1200px;
   padding: 200px 24px 64px;
 `;
 
