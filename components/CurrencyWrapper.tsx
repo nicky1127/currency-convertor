@@ -22,22 +22,22 @@ interface currencyMap {
 // const currencyMap: { [currencyName: string]: currency } = {
 // const currencyMap: currencyMap = {
 const currencyMap: Record<string, currency> = {
-  gbp: {
+  GBP: {
     code: 'GBP',
     name: 'British Pound',
     src: '/images/gbp.svg'
   },
-  usd: {
+  USD: {
     code: 'USD',
     name: 'US Dollar',
     src: '/images/usd.svg'
   },
-  twd: {
+  TWD: {
     code: 'TWD',
     name: 'Taiwan New Dollar',
     src: '/images/twd.svg'
   },
-  jpy: {
+  JPY: {
     code: 'JPY',
     name: 'Japanese Yen',
     src: '/images/jpy.svg'
@@ -103,10 +103,10 @@ type props = {
   currency: string;
   amount?: string;
   inputActivated?: boolean;
-  handleChange?: (evt: React.ChangeEvent<HTMLInputElement>) => void;
+  handleChangeInput?: (currency: string) => void;
 };
 
-const CurrencyWrapper = ({ id, currency, inputActivated }: props) => {
+const CurrencyWrapper = ({ id, currency, inputActivated, handleChangeInput }: props) => {
   const [selectOpen, setSelectOpen] = useState(false);
   return (
     <div
@@ -235,6 +235,7 @@ const CurrencyWrapper = ({ id, currency, inputActivated }: props) => {
             imgSrc={currency.src}
             code={currency.code}
             name={currency.name}
+            handleClick={handleChangeInput}
           />
         ))}
       </ul>

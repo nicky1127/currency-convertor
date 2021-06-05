@@ -6,6 +6,7 @@ type props = {
   imgSrc: string;
   code: string;
   name: string;
+  handleClick: (currency: string) => void;
 };
 
 const StyledImageWrapper = styled.div`
@@ -32,12 +33,13 @@ const StyledImage = styled.img`
 `;
 
 const CurrencyOption = (props: props) => {
-  const { id, imgSrc, code, name } = props;
+  const { id, imgSrc, code, name, handleClick } = props;
   return (
     <li
       id={id}
       role="option"
       aria-selected="true"
+      onClick={() => handleClick(code)}
       css={`
         display: flex;
         align-items: center;

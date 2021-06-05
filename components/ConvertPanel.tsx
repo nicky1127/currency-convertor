@@ -57,7 +57,7 @@ const ConvertPanel = () => {
 
   const [amount, setAmount] = useState('');
   const [rate, setRate] = useState(null);
-  const [currencyArr, setCurrencyArr] = useState(['gbp', 'twd']);
+  const [currencyArr, setCurrencyArr] = useState(['GBP', 'TWD']);
   const [fullNameArr, setFullNameArr] = useState(['', '']);
   const [lastUpdated, setLastUpdated] = useState('');
   const [errMsg, setErrMsg] = useState('');
@@ -65,7 +65,8 @@ const ConvertPanel = () => {
   const [animeOnResult, setAnimeOnResult] = useState(true);
   // const [containerVisibility, setContainerVisibility] = useState('hidden');
   // const [containerOpacity, setContainerOpacity] = useState(0);
-
+  console.log(`fullNameArr`, fullNameArr);
+  console.log(`currencyArr`, currencyArr);
   useEffect(() => {
     if (isNaN(+amount)) {
       return setErrMsg('Please enter a valid amount');
@@ -82,6 +83,14 @@ const ConvertPanel = () => {
       //   setContainerOpacity(1);
       // }, 200);
     }
+  };
+
+  const handleChangeFromCurrency = (currency: string): void => {
+    setCurrencyArr([currency, currencyArr[1]]);
+  };
+
+  const handleChangeToCurrency = (currency: string): void => {
+    setCurrencyArr([currencyArr[0], currency]);
   };
 
   const handleClickSwapButton = (evt: React.MouseEvent<HTMLButtonElement>): void => {
@@ -158,7 +167,12 @@ const ConvertPanel = () => {
         <ErrorMsg aria-live="assertive">{errMsg}</ErrorMsg>
 
         <Label htmlFor="input_fromCurrency">From</Label>
-        <CurrencyWrapper id="input_fromCurrency" inputActivated={false} currency={currencyArr[0]} />
+        <CurrencyWrapper
+          id="input_fromCurrency"
+          inputActivated={false}
+          currency={currencyArr[0]}
+          handleChangeInput={handleChangeFromCurrency}
+        />
         <div></div>
 
         <div></div>
@@ -168,7 +182,12 @@ const ConvertPanel = () => {
         <div></div>
 
         <Label htmlFor="input-toCurrency">To</Label>
-        <CurrencyWrapper id="input_toCurrency" inputActivated={false} currency={currencyArr[1]} />
+        <CurrencyWrapper
+          id="input_toCurrency"
+          inputActivated={false}
+          currency={currencyArr[1]}
+          handleChangeInput={handleChangeToCurrency}
+        />
         <div></div>
       </S.ConvertPanelGridWrapper>
       {hideButton ? (
