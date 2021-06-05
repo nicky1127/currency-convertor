@@ -1,5 +1,5 @@
 'use strict';
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 
 import CurrencyOption from 'components/CurrencyOption';
@@ -124,9 +124,26 @@ type props = {
 const CurrencyWrapper = ({ id, currency, inputActivated, handleChangeInput }: props) => {
   const [selectOpen, setSelectOpen] = useState(false);
 
-  console.log(`selectOpen`, selectOpen);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (!ref?.current?.contains(event.target)) {
+        setSelectOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [ref]);
+
+  const handleClickItem = (currency: string): void => {
+    handleChangeInput(currency);
+    setSelectOpen(false);
+  };
+
   return (
     <div
+      ref={ref}
       css={`
         display: inline-block;
         position: relative;
@@ -153,6 +170,14 @@ const CurrencyWrapper = ({ id, currency, inputActivated, handleChangeInput }: pr
               height: auto;
               flex-shrink: 0;
               margin-right: 8px;
+              &::after {
+                content: ' ';
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                border: 1px solid rgba(0, 17, 51, 0.15);
+                border-radius: 2px;
+              }
             `}
           >
             <img
@@ -239,7 +264,7 @@ const CurrencyWrapper = ({ id, currency, inputActivated, handleChangeInput }: pr
             imgSrc={currency.src}
             code={currency.code}
             name={currency.name}
-            handleClick={handleChangeInput}
+            handleClick={handleClickItem}
           />
         ))}
       </CurrencyMenu>
