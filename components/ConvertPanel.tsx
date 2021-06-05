@@ -132,14 +132,6 @@ const ConvertPanel = () => {
           setFullNameArr([fromCurrency, toCurrency]);
           setLastUpdated(time);
           setAnimeOnResult(true);
-          // setContainerVisibility('hidden');
-          // setTimeout(() => {
-          //   setContainerVisibility('visible');
-          // }, 200);
-          // setContainerOpacity(0);
-          // setTimeout(() => {
-          //   setContainerOpacity(1);
-          // }, 200);
         }
 
         setHideButton(true);

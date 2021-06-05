@@ -98,6 +98,21 @@ const Input = styled.input<{ inputActivated: boolean }>`
   }
 `;
 
+const CurrencyMenu = styled.ul<{ open: boolean }>`
+  display: ${({ open }) => (open ? 'block' : 'none')};
+  width: 100%;
+  position: absolute;
+  left: 0;
+  top: 100%;
+  z-index: 10;
+  overflow: auto;
+  max-height: 300px;
+  margin-top: 8px;
+  border-radius: 0 0 8px 8px;
+  box-shadow: rgb(0 17 51 / 10%) 0px 10px 40px;
+  background-color: rgb(255, 255, 255);
+`;
+
 type props = {
   id: string;
   currency: string;
@@ -108,6 +123,8 @@ type props = {
 
 const CurrencyWrapper = ({ id, currency, inputActivated, handleChangeInput }: props) => {
   const [selectOpen, setSelectOpen] = useState(false);
+
+  console.log(`selectOpen`, selectOpen);
   return (
     <div
       css={`
@@ -200,6 +217,9 @@ const CurrencyWrapper = ({ id, currency, inputActivated, handleChangeInput }: pr
       </CurrencySelection>
       <InputWrapper
         id={`${id}_inputWrapper`}
+        onClick={() => {
+          setSelectOpen(true);
+        }}
         css={`
           height: 100%;
           position: absolute;
@@ -211,23 +231,7 @@ const CurrencyWrapper = ({ id, currency, inputActivated, handleChangeInput }: pr
       >
         <Input id={`${id}_input`} inputActivated={inputActivated} />
       </InputWrapper>
-      <ul
-        id={`${id}_listbox`}
-        role="listbox"
-        css={`
-          width: 100%;
-          position: absolute;
-          left: 0;
-          top: 100%;
-          z-index: 10;
-          overflow: auto;
-          max-height: 300px;
-          margin-top: 8px;
-          border-radius: 0 0 8px 8px;
-          box-shadow: rgb(0 17 51 / 10%) 0px 10px 40px;
-          background-color: rgb(255, 255, 255);
-        `}
-      >
+      <CurrencyMenu id={`${id}_listbox`} role="listbox" open={selectOpen}>
         {Object.values(currencyMap).map((currency, idx) => (
           <CurrencyOption
             id={`${id}_option_${idx}`}
@@ -238,7 +242,7 @@ const CurrencyWrapper = ({ id, currency, inputActivated, handleChangeInput }: pr
             handleClick={handleChangeInput}
           />
         ))}
-      </ul>
+      </CurrencyMenu>
     </div>
   );
 };
