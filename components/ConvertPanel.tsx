@@ -88,10 +88,68 @@ const ConvertPanel = () => {
   };
 
   const handleChangeFromCurrency = (currency: string): void => {
+    if (hideButton) {
+      fetch(
+        `https://www.alphavantage.co/query?
+				function=CURRENCY_EXCHANGE_RATE&
+				from_currency=${currency.toUpperCase()}&
+				to_currency=${currencyArr[1].toUpperCase()}&
+				apikey=CR78XFOMW0NKUEI7
+				`
+      )
+        .then((res) => res.json())
+        .then((json) => {
+          console.log(`json`, json);
+          const rateObj = json['Realtime Currency Exchange Rate'];
+          if (rateObj) {
+            const rate = rateObj['5. Exchange Rate'];
+            const fromCurrency = rateObj['2. From_Currency Name'];
+            const toCurrency = rateObj['4. To_Currency Name'];
+            const time = rateObj['6. Last Refreshed'];
+            setTimeout(() => {
+              setRate([1, +rate]);
+            }, 200);
+            setFullNameArr([fromCurrency, toCurrency]);
+            setLastUpdated(time);
+            setAnimeOnResult(true);
+          }
+
+          // setHideButton(true);
+        });
+    }
     setCurrencyArr([currency, currencyArr[1]]);
   };
 
   const handleChangeToCurrency = (currency: string): void => {
+    if (hideButton) {
+      fetch(
+        `https://www.alphavantage.co/query?
+				function=CURRENCY_EXCHANGE_RATE&
+				from_currency=${currencyArr[0].toUpperCase()}&
+				to_currency=${currency.toUpperCase()}&
+				apikey=CR78XFOMW0NKUEI7
+				`
+      )
+        .then((res) => res.json())
+        .then((json) => {
+          console.log(`json`, json);
+          const rateObj = json['Realtime Currency Exchange Rate'];
+          if (rateObj) {
+            const rate = rateObj['5. Exchange Rate'];
+            const fromCurrency = rateObj['2. From_Currency Name'];
+            const toCurrency = rateObj['4. To_Currency Name'];
+            const time = rateObj['6. Last Refreshed'];
+            setTimeout(() => {
+              setRate([1, +rate]);
+            }, 200);
+            setFullNameArr([fromCurrency, toCurrency]);
+            setLastUpdated(time);
+            setAnimeOnResult(true);
+          }
+
+          // setHideButton(true);
+        });
+    }
     setCurrencyArr([currencyArr[0], currency]);
   };
 
