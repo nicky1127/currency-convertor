@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import { Normalize } from 'styled-normalize';
 import styles from '../styles/Home.module.css';
 import styled from 'styled-components';
 import ContentWrapper from '../components/ContentWrapper';
@@ -23,6 +24,7 @@ export default function Home() {
         <title>TWD Convertor</title>
         <link rel="icon" href="/favicon_2.png" />
       </Head>
+      <Normalize />
       <Wrapper className="appWrapper">
         <BgContainer colour="#0a2239" />
         <ContentWrapper />

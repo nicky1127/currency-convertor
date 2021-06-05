@@ -1,10 +1,10 @@
 'use strict';
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
-import CurrencyOption from './CurrencyOption';
+import CurrencyOption from 'components/CurrencyOption';
 
-import ArrowIcon from '../public/images/select_arrow.svg';
+import ArrowIcon from 'public/images/select_arrow.svg';
 
 import * as S from './styles';
 
@@ -112,7 +112,7 @@ type props = {
 };
 
 const CurrencyWrapper = ({ id, currency, inputActivated }: props) => {
-  // console.log(`%c CurrencyWrapper-${id}`, "background: #222; color: red");
+  const [selectOpen, setSelectOpen] = useState(false);
   return (
     <div
       css={`
@@ -235,7 +235,8 @@ const CurrencyWrapper = ({ id, currency, inputActivated }: props) => {
       >
         {Object.values(currencyMap).map((currency, idx) => (
           <CurrencyOption
-            id={`${id}_-option-${idx}`}
+            id={`${id}_option_${idx}`}
+            key={`${id}_option_${idx}`}
             imgSrc={currency.src}
             code={currency.code}
             name={currency.name}
