@@ -1,4 +1,5 @@
 import React from 'react';
+import styled from 'styled-components';
 
 type props = {
   id: string;
@@ -6,6 +7,29 @@ type props = {
   code: string;
   name: string;
 };
+
+const StyledImageWrapper = styled.div`
+  width: 24px;
+  height: auto;
+  display: inline-flex;
+  position: relative;
+  /* border-radius: 2px; */
+  overflow: hidden;
+  &::after {
+    content: ' ';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border: 1px solid rgba(0, 17, 51, 0.15);
+    border-radius: 2px;
+  }
+`;
+
+const StyledImage = styled.img`
+  object-fit: contain;
+  width: 100%;
+  height: 100%;
+`;
 
 const CurrencyOption = (props: props) => {
   const { id, imgSrc, code, name } = props;
@@ -42,26 +66,9 @@ const CurrencyOption = (props: props) => {
           margin-right: 8px;
         `}
       >
-        <div
-          css={`
-            width: 24px;
-            height: auto;
-            display: inline-flex;
-            position: relative;
-            border-radius: 2px;
-            overflow: hidden;
-          `}
-        >
-          <img
-            src={imgSrc}
-            // alt={currencyMap[currency].name}
-            css={`
-              object-fit: contain;
-              width: 100%;
-              height: 100%;
-            `}
-          />
-        </div>
+        <StyledImageWrapper>
+          <StyledImage src={imgSrc} />
+        </StyledImageWrapper>
       </div>
       <div>
         {code}&nbsp;-&nbsp;

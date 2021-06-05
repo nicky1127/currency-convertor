@@ -18,6 +18,9 @@ interface currencyMap {
   [currencyName: string]: currency;
 }
 
+//! Three ways to denote the type of object
+// const currencyMap: { [currencyName: string]: currency } = {
+// const currencyMap: currencyMap = {
 const currencyMap: Record<string, currency> = {
   gbp: {
     code: 'GBP',
@@ -33,21 +36,13 @@ const currencyMap: Record<string, currency> = {
     code: 'TWD',
     name: 'Taiwan New Dollar',
     src: '/images/twd.svg'
+  },
+  jpy: {
+    code: 'JPY',
+    name: 'Japanese Yen',
+    src: '/images/jpy.svg'
   }
 };
-
-// const currencyMap: currencyMap = {
-//   gbp: {
-//     code: "GBP",
-//     name: "British Pound",
-//     src: "/images/gbp.svg",
-//   },
-//   twd: {
-//     code: "TWD",
-//     name: "Taiwan New Dollar",
-//     src: "/images/twd.svg",
-//   },
-// };
 
 const CurrencySelection = styled.div.attrs((props) => ({
   id: 'fromCurrency-selection',
