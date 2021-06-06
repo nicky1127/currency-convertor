@@ -74,7 +74,6 @@ const getRateData = async (
     const response = await fetch(url, options).then((res) => res.json());
 
     if (response['Error Message']) throw Error(response['Error Message']);
-    console.log(`response`, response);
     const data = await response?.['Realtime Currency Exchange Rate'];
     return data;
   } catch (err) {
@@ -93,12 +92,12 @@ const ConvertPanel = () => {
   const [errMsg, setErrMsg] = useState('');
   const [hideButton, setHideButton] = useState(false);
   const [animeOnResult, setAnimeOnResult] = useState(true);
+  const [loading, setLoading] = useState(false);
   // const [containerVisibility, setContainerVisibility] = useState('hidden');
   // const [containerOpacity, setContainerOpacity] = useState(0);
-  console.log(`fullNameArr`, fullNameArr);
-  console.log(`currencyArr`, currencyArr);
 
-  console.log(`rate`, rate);
+  console.log(`loading`, loading);
+
   useEffect(() => {
     if (isNaN(+amount)) {
       return setErrMsg('Please enter a valid amount');
@@ -133,24 +132,28 @@ const ConvertPanel = () => {
   const handleChangeFromCurrency = async (currency: string): Promise<any> => {
     if (hideButton) {
       try {
+        setLoading(true);
         const rateObj: { string: string } = await getRateData(currency, currencyArr[1]);
         rateObj && destructureRes(rateObj);
       } catch (err) {
         console.error(err);
       }
     }
+    setLoading(false);
     setCurrencyArr([currency, currencyArr[1]]);
   };
 
   const handleChangeToCurrency = async (currency: string): Promise<any> => {
     if (hideButton) {
       try {
+        setLoading(true);
         const rateObj: { string: string } = await getRateData(currencyArr[0], currency);
         rateObj && destructureRes(rateObj);
       } catch (err) {
         console.error(err);
       }
     }
+    setLoading(false);
     setCurrencyArr([currencyArr[0], currency]);
   };
 
@@ -160,12 +163,14 @@ const ConvertPanel = () => {
 
     if (hideButton) {
       try {
+        setLoading(true);
         const rateObj: { string: string } = await getRateData(currencyArr[1], currencyArr[0]);
         rateObj && destructureRes(rateObj);
       } catch (err) {
         console.error(err);
       }
     }
+    setLoading(false);
     setCurrencyArr(([a, b]) => [b, a]);
     // rate && setRate(([a, b]) => [b, a]);
     // setFullNameArr(([a, b]) => [b, a]);
@@ -181,12 +186,13 @@ const ConvertPanel = () => {
       return setErrMsg('Please enter a valid amount');
     }
     try {
+      setLoading(true);
       const rateObj: { string: string } = await getRateData(currencyArr[0], currencyArr[1]);
       rateObj && destructureRes(rateObj);
     } catch (err) {
       console.error(err);
     }
-
+    setLoading(false);
     setHideButton(true);
   };
 
@@ -237,7 +243,7 @@ const ConvertPanel = () => {
       {hideButton ? (
         <div
           key={amount}
-          id="happy"
+          id="resultContainer"
           className="resultContainer"
           onAnimationEnd={() => {
             setAnimeOnResult(false);
@@ -245,6 +251,7 @@ const ConvertPanel = () => {
           css={`
             margin-top: 24px;
             animation: ${animeOnResult && fadeIn} ease 1s;
+            opacity: ${loading ? 0 : 1};
             /* opacity: containerOpacity;
               transition: opacity 0.5s ease 0s; */
           `}
