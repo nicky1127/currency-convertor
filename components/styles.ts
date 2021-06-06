@@ -63,9 +63,10 @@ export const SwapButtonContainer = styled.div`
   @media (min-width: 576px) {
     margin: 0;
     place-self: center;
+    justify-content: space-between;
   }
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   margin: 16px 0 -8px;
 `;
 

@@ -17,6 +17,9 @@ const IconButton = ({ icon, handleClick }: props) => {
         &:focus {
           outline: none;
         }
+        @media (max-width: 576px) {
+          transform: rotate(90deg);
+        }
       `}
       onClick={handleClick}
     >
