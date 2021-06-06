@@ -9,6 +9,8 @@ import CurrencyWrapper from './CurrencyWrapper';
 import IconButton from './IconButton';
 import * as S from './styles';
 
+import { useFetch } from 'hooks/index';
+
 const fadeIn = keyframes`
   0% {
     opacity: 0;
@@ -51,6 +53,34 @@ const ErrorMsg = styled.div`
   font-size: 1.2rem;
   color: rgb(179, 0, 33);
 `;
+type JSONResponse = {
+  data?: {
+    ['Realtime Currency Exchange Rate']: Omit<{ [name: string]: string }, 'fetchedAt'>;
+  };
+  errors?: Array<{ message: string }>;
+};
+
+const getRateData = async (
+  from: string = '',
+  to: string = '',
+  options = null
+): Promise<{ string: string }> => {
+  const url: string = `https://www.alphavantage.co/query?
+				function=CURRENCY_EXCHANGE_RATE&
+				from_currency=${from.toUpperCase()}&
+				to_currency=${to.toUpperCase()}&
+				apikey=${process.env.API_KEY}`;
+  try {
+    const response = await fetch(url, options).then((res) => res.json());
+
+    if (response['Error Message']) throw Error(response['Error Message']);
+    console.log(`response`, response);
+    const data = await response?.['Realtime Currency Exchange Rate'];
+    return data;
+  } catch (err) {
+    return Promise.reject(err.message);
+  }
+};
 
 const ConvertPanel = () => {
   // console.log('%c ConvertPanel', 'background: #222; color: yellow');
@@ -87,144 +117,77 @@ const ConvertPanel = () => {
     }
   };
 
-  const handleChangeFromCurrency = (currency: string): void => {
-    if (hideButton) {
-      fetch(
-        `https://www.alphavantage.co/query?
-				function=CURRENCY_EXCHANGE_RATE&
-				from_currency=${currency.toUpperCase()}&
-				to_currency=${currencyArr[1].toUpperCase()}&
-				apikey=CR78XFOMW0NKUEI7
-				`
-      )
-        .then((res) => res.json())
-        .then((json) => {
-          console.log(`json`, json);
-          const rateObj = json['Realtime Currency Exchange Rate'];
-          if (rateObj) {
-            const rate = rateObj['5. Exchange Rate'];
-            const fromCurrency = rateObj['2. From_Currency Name'];
-            const toCurrency = rateObj['4. To_Currency Name'];
-            const time = rateObj['6. Last Refreshed'];
-            setTimeout(() => {
-              setRate([1, +rate]);
-            }, 200);
-            setFullNameArr([fromCurrency, toCurrency]);
-            setLastUpdated(time);
-            setAnimeOnResult(true);
-          }
+  const destructureRes = (obj: { string: string }): void => {
+    const rate = obj['5. Exchange Rate'];
+    const fromCurrency = obj['2. From_Currency Name'];
+    const toCurrency = obj['4. To_Currency Name'];
+    const time = obj['6. Last Refreshed'];
+    setTimeout(() => {
+      setRate([1, +rate]);
+    }, 200);
+    setFullNameArr([fromCurrency, toCurrency]);
+    setLastUpdated(time);
+    setAnimeOnResult(true);
+  };
 
-          // setHideButton(true);
-        });
+  const handleChangeFromCurrency = async (currency: string): Promise<any> => {
+    if (hideButton) {
+      try {
+        const rateObj: { string: string } = await getRateData(currency, currencyArr[1]);
+        rateObj && destructureRes(rateObj);
+      } catch (err) {
+        console.error(err);
+      }
     }
     setCurrencyArr([currency, currencyArr[1]]);
   };
 
-  const handleChangeToCurrency = (currency: string): void => {
+  const handleChangeToCurrency = async (currency: string): Promise<any> => {
     if (hideButton) {
-      fetch(
-        `https://www.alphavantage.co/query?
-				function=CURRENCY_EXCHANGE_RATE&
-				from_currency=${currencyArr[0].toUpperCase()}&
-				to_currency=${currency.toUpperCase()}&
-				apikey=CR78XFOMW0NKUEI7
-				`
-      )
-        .then((res) => res.json())
-        .then((json) => {
-          console.log(`json`, json);
-          const rateObj = json['Realtime Currency Exchange Rate'];
-          if (rateObj) {
-            const rate = rateObj['5. Exchange Rate'];
-            const fromCurrency = rateObj['2. From_Currency Name'];
-            const toCurrency = rateObj['4. To_Currency Name'];
-            const time = rateObj['6. Last Refreshed'];
-            setTimeout(() => {
-              setRate([1, +rate]);
-            }, 200);
-            setFullNameArr([fromCurrency, toCurrency]);
-            setLastUpdated(time);
-            setAnimeOnResult(true);
-          }
-
-          // setHideButton(true);
-        });
+      try {
+        const rateObj: { string: string } = await getRateData(currencyArr[0], currency);
+        rateObj && destructureRes(rateObj);
+      } catch (err) {
+        console.error(err);
+      }
     }
     setCurrencyArr([currencyArr[0], currency]);
   };
 
-  const handleClickSwapButton = (evt: React.MouseEvent<HTMLButtonElement>): void => {
+  const handleClickSwapButton = async (evt: React.MouseEvent<HTMLButtonElement>): Promise<any> => {
     evt.preventDefault();
     evt.stopPropagation();
-    if (hideButton) {
-      fetch(
-        `https://www.alphavantage.co/query?
-				function=CURRENCY_EXCHANGE_RATE&
-				from_currency=${currencyArr[1].toUpperCase()}&
-				to_currency=${currencyArr[0].toUpperCase()}&
-				apikey=CR78XFOMW0NKUEI7
-				`
-      )
-        .then((res) => res.json())
-        .then((json) => {
-          console.log(`json`, json);
-          const rateObj = json['Realtime Currency Exchange Rate'];
-          if (rateObj) {
-            const rate = rateObj['5. Exchange Rate'];
-            const fromCurrency = rateObj['2. From_Currency Name'];
-            const toCurrency = rateObj['4. To_Currency Name'];
-            const time = rateObj['6. Last Refreshed'];
-            setTimeout(() => {
-              setRate([1, +rate]);
-            }, 200);
-            setFullNameArr([fromCurrency, toCurrency]);
-            setLastUpdated(time);
-            setAnimeOnResult(true);
-          }
 
-          // setHideButton(true);
-        });
+    if (hideButton) {
+      try {
+        const rateObj: { string: string } = await getRateData(currencyArr[1], currencyArr[0]);
+        rateObj && destructureRes(rateObj);
+      } catch (err) {
+        console.error(err);
+      }
     }
     setCurrencyArr(([a, b]) => [b, a]);
     // rate && setRate(([a, b]) => [b, a]);
     // setFullNameArr(([a, b]) => [b, a]);
   };
 
-  const handleClickConvertButton = (evt: React.MouseEvent<HTMLButtonElement>): void => {
+  const handleClickConvertButton = async (
+    evt: React.MouseEvent<HTMLButtonElement>
+  ): Promise<any> => {
     evt.preventDefault();
     evt.stopPropagation();
 
     if (!amount || isNaN(+amount)) {
       return setErrMsg('Please enter a valid amount');
     }
+    try {
+      const rateObj: { string: string } = await getRateData(currencyArr[0], currencyArr[1]);
+      rateObj && destructureRes(rateObj);
+    } catch (err) {
+      console.error(err);
+    }
 
-    fetch(
-      `https://www.alphavantage.co/query?
-			function=CURRENCY_EXCHANGE_RATE&
-			from_currency=${currencyArr[0].toUpperCase()}&
-			to_currency=${currencyArr[1].toUpperCase()}&
-			apikey=CR78XFOMW0NKUEI7
-			`
-    )
-      .then((res) => res.json())
-      .then((json) => {
-        console.log(`json`, json);
-        const rateObj = json['Realtime Currency Exchange Rate'];
-        if (rateObj) {
-          const rate = rateObj['5. Exchange Rate'];
-          const fromCurrency = rateObj['2. From_Currency Name'];
-          const toCurrency = rateObj['4. To_Currency Name'];
-          const time = rateObj['6. Last Refreshed'];
-          setTimeout(() => {
-            setRate([1, +rate]);
-          }, 200);
-          setFullNameArr([fromCurrency, toCurrency]);
-          setLastUpdated(time);
-          setAnimeOnResult(true);
-        }
-
-        setHideButton(true);
-      });
+    setHideButton(true);
   };
 
   return (
