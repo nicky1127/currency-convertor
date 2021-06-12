@@ -284,18 +284,34 @@ const CurrencyWrapper = ({ id, currency, inputActivated, handleChangeInput }: pr
         />
       </InputWrapper>
       <CurrencyMenu id={`${id}_listbox`} role="listbox" open={selectOpen}>
-        {items.map((currency, idx) => {
-          return (
-            <CurrencyOption
-              id={`${id}_option_${idx}`}
-              key={`${id}_option_${idx}`}
-              imgSrc={currency.src}
-              code={currency.code}
-              name={currency.name}
-              handleClick={handleClickItem}
-            />
-          );
-        })}
+        {items.length > 0 ? (
+          items.map((currency, idx) => {
+            return (
+              <CurrencyOption
+                id={`${id}_option_${idx}`}
+                key={`${id}_option_${idx}`}
+                imgSrc={currency.src}
+                code={currency.code}
+                name={currency.name}
+                handleClick={handleClickItem}
+              />
+            );
+          })
+        ) : (
+          <div
+            css={`
+              width: 100%;
+              height: 40px;
+              font-size: 1.2rem;
+              background: #fff;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+            `}
+          >
+            No results available
+          </div>
+        )}
       </CurrencyMenu>
     </div>
   );
