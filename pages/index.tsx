@@ -6,7 +6,8 @@ import ContentWrapper from '../components/ContentWrapper';
 
 const Wrapper = styled.div`
   width: 100%;
-  height: 100vh;
+  min-width: 300px;
+  position: relative;
   background-color: #f1dede;
 `;
 

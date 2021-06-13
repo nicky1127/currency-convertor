@@ -8,7 +8,7 @@ const Root = styled.div`
   margin: 0 auto;
   min-width: 300px;
   max-width: 1200px;
-  padding: 200px 24px 64px;
+  padding: 200px 24px 0;
   @media (max-width: 576px) {
     padding-top: 150px;
   }
