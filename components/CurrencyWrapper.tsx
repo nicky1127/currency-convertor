@@ -77,6 +77,7 @@ const InputWrapper = styled.div.attrs((props) => ({
   top: 0;
   left: 0;
 `;
+// autocomplete = 'new-password';
 
 const Input = styled.input<{ inputActivated: boolean }>`
   width: 100%;
@@ -280,7 +281,7 @@ const CurrencyWrapper = ({ id, currency, inputActivated, handleChangeInput }: pr
           value={searchText}
           onChange={handleChangeSearch}
           placeholder="Type to search..."
-          autocomplete="new-password"
+          autoComplete="new-password"
         />
       </InputWrapper>
       <CurrencyMenu id={`${id}_listbox`} role="listbox" open={selectOpen}>
