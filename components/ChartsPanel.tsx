@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import styled, { keyframes } from 'styled-components';
 
 import SwapIcon from '../public/images/convert.svg';
-import InputWrapper from './InputWrapper';
+import ChartContainer from 'components/ChartContainer';
 import CurrencyWrapper from './CurrencyWrapper';
 import IconButton from './IconButton';
 import * as S from './styles';
@@ -90,7 +90,7 @@ const ChartsPanel = () => {
   const [fullNameArr, setFullNameArr] = useState(['', '']);
   const [lastUpdated, setLastUpdated] = useState('');
   const [errMsg, setErrMsg] = useState('');
-  const [hideButton, setHideButton] = useState(false);
+  const [hideButton, setHideButton] = useState(true);
   const [animeOnResult, setAnimeOnResult] = useState(true);
   const [loading, setLoading] = useState(false);
   // const [containerVisibility, setContainerVisibility] = useState('hidden');
@@ -182,13 +182,10 @@ const ChartsPanel = () => {
     evt.preventDefault();
     evt.stopPropagation();
 
-    if (!amount || isNaN(+amount)) {
-      return setErrMsg('Please enter a valid amount');
-    }
     try {
       setLoading(true);
-      const rateObj: { string: string } = await getRateData(currencyArr[0], currencyArr[1]);
-      rateObj && destructureRes(rateObj);
+      // const rateObj: { string: string } = await getRateData(currencyArr[0], currencyArr[1]);
+      // rateObj && destructureRes(rateObj);
     } catch (err) {
       console.error(err);
     }
@@ -239,89 +236,18 @@ const ChartsPanel = () => {
       </S.ChartsPanelGridContainer>
       {hideButton ? (
         <div
-          key={amount}
-          id="resultContainer"
-          className="resultContainer"
-          onAnimationEnd={() => {
-            setAnimeOnResult(false);
-          }}
+          id="chartContainer"
+          className="chartContainer"
+          // onAnimationEnd={() => {
+          //   setAnimeOnResult(false);
+          // }}
           css={`
             margin-top: 24px;
-            animation: ${animeOnResult && fadeIn} ease 1s;
-            opacity: ${loading ? 0 : 1};
-            /* opacity: containerOpacity;
-              transition: opacity 0.5s ease 0s; */
+            /* animation: ${animeOnResult && fadeIn} ease 1s;
+            opacity: ${loading ? 0 : 1}; */
           `}
         >
-          <div
-            className="figureContainer"
-            css={`
-              //* option1
-              height: auto;
-              overflow: visible;
-              visibility: visible;
-              animation: ${growHeight} ease 1s;
-              //* option2
-              /* height: ${rate ? 'auto' : 0}; */
-              /* overflow: visible;
-                visibility: containerVisibility;
-								
-                transition: height 1s ease 0s, visibility 2s ease 0s; */
-            `}
-          >
-            <p
-              css={`
-                color: rgb(92, 102, 123);
-                font-size: 1.6rem;
-                font-weight: 600;
-              `}
-            >
-              {`${(+amount).toLocaleString('en-US', {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2
-              })} ${fullNameArr[0]} = `}
-            </p>
-            <p
-              css={`
-                color: rgb(46, 60, 87);
-                font-size: 3rem;
-                font-weight: 600;
-                margin-bottom: 24px;
-              `}
-            >
-              {`${
-                rate &&
-                ((+amount * rate[1]) / rate[0]).toLocaleString('en-US', {
-                  minimumFractionDigits: 2,
-                  maximumFractionDigits: 2
-                })
-              } ${fullNameArr[1]}`}
-            </p>
-          </div>
-
-          <S.UnitRatesContainer className="unitRatesContainer">
-            <p>{`1 ${currencyArr[0].toUpperCase()} = ${
-              rate &&
-              Number(rate[1] / rate[0]).toLocaleString('en-US', {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 5
-              })
-            } ${currencyArr[1].toUpperCase()}`}</p>
-            <p>{`1 ${currencyArr[1].toUpperCase()} = ${
-              rate &&
-              Number(rate[0] / rate[1]).toLocaleString('en-US', {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 5
-              })
-            } ${currencyArr[0].toUpperCase()}`}</p>
-
-            <p
-              css={`
-                margin-top: 12px;
-                font-size: 1.2rem;
-              `}
-            >{`Last updated ${lastUpdated}`}</p>
-          </S.UnitRatesContainer>
+          <ChartContainer fromCurrency={currencyArr[0]} toCurrency={currencyArr[1]} />
         </div>
       ) : (
         <S.SubmitContainer
@@ -330,10 +256,9 @@ const ChartsPanel = () => {
             margin-top: 24px;
           `}
         >
-          <S.ConvertButton onClick={handleClickConvertButton}>Convert</S.ConvertButton>
+          <S.ConvertButton onClick={handleClickConvertButton}>View Chart</S.ConvertButton>
         </S.SubmitContainer>
       )}
-      {/* </form> */}
     </div>
   );
 };

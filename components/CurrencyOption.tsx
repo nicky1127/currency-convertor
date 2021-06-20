@@ -32,8 +32,7 @@ const StyledImage = styled.img`
   height: 100%;
 `;
 
-const CurrencyOption = (props: props) => {
-  const { id, imgSrc, code, name, handleClick } = props;
+const CurrencyOption = ({ id, imgSrc, code, name, handleClick }: props) => {
   return (
     <li
       id={id}
