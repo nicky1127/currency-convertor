@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 
 import ConvertPanel from './ConvertPanel';
+import ChartsPanel from 'components/ChartsPanel';
+
+//> SVG images
 import MoneyIcon from '../public/images/icon_money.svg';
 import ChartIcon from '../public/images/icon_chart.svg';
 
@@ -56,46 +59,34 @@ const Tab = styled.a<{ active: boolean }>`
   }
 `;
 
+const TabTitle = styled.span`
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  @media (min-width: 480px) {
+    margin-left: 8px;
+  }
+`;
+
 const MainPanel = () => {
   // console.log('%c MainModal', 'background: #222; color: #00ccff');
 
   const [panel, setPanel] = useState(0);
 
   return (
-    <Root className="converterWrapper">
+    <Root className="mainPanelWrapper">
       <TabContainer>
         <Tab active={panel === 0} onClick={() => setPanel(0)}>
           <MoneyIcon />
-          <span
-            css={`
-              max-width: 100%;
-              overflow: hidden;
-              text-overflow: ellipsis;
-              @media (min-width: 480px) {
-                margin-left: 8px;
-              }
-            `}
-          >
-            Convert
-          </span>
+          <TabTitle>Convert</TabTitle>
         </Tab>
         <Tab active={panel === 1} onClick={() => setPanel(1)}>
           <ChartIcon />
-          <span
-            css={`
-              max-width: 100%;
-              overflow: hidden;
-              text-overflow: ellipsis;
-              @media (min-width: 480px) {
-                margin-left: 8px;
-              }
-            `}
-          >
-            Charts
-          </span>
+          <TabTitle>Charts</TabTitle>
         </Tab>
       </TabContainer>
-      <ConvertPanel />
+      {panel === 0 && <ConvertPanel />}
+      {panel === 1 && <ChartsPanel />}
     </Root>
   );
 };
