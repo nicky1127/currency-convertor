@@ -212,9 +212,9 @@ const ChartsPanel = () => {
     >
       {/* <form> */}
       <S.ConvertPanelGridWrapper>
-        <Label htmlFor="input_amount">Amount</Label>
+        {/* <Label htmlFor="input_amount">Amount</Label>
         <InputWrapper id="input_amount" name="amount" amount={amount} handleChange={handleChange} />
-        <ErrorMsg aria-live="assertive">{errMsg}</ErrorMsg>
+        <ErrorMsg aria-live="assertive">{errMsg}</ErrorMsg> */}
 
         <Label htmlFor="input_fromCurrency">From</Label>
         <CurrencyWrapper

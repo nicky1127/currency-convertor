@@ -130,6 +130,7 @@ const ConvertPanel = () => {
   };
 
   const handleChangeFromCurrency = async (currency: string): Promise<any> => {
+    setCurrencyArr([currency, currencyArr[1]]);
     if (hideButton) {
       try {
         setLoading(true);
@@ -140,7 +141,6 @@ const ConvertPanel = () => {
       }
     }
     setLoading(false);
-    setCurrencyArr([currency, currencyArr[1]]);
   };
 
   const handleChangeToCurrency = async (currency: string): Promise<any> => {
@@ -213,7 +213,13 @@ const ConvertPanel = () => {
       {/* <form> */}
       <S.ConvertPanelGridWrapper>
         <Label htmlFor="input_amount">Amount</Label>
-        <InputWrapper id="input_amount" name="amount" amount={amount} handleChange={handleChange} />
+        <InputWrapper
+          id="input_amount"
+          name="amount"
+          currency={currencyArr[0]}
+          amount={amount}
+          handleChange={handleChange}
+        />
         <ErrorMsg aria-live="assertive">{errMsg}</ErrorMsg>
 
         <Label htmlFor="input_fromCurrency">From</Label>

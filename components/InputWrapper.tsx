@@ -3,6 +3,13 @@ import styled from 'styled-components';
 
 import * as S from './styles';
 
+const currencySymbolMap: { [currency: string]: string } = {
+  GBP: '£',
+  USD: '$',
+  TWD: 'NT$',
+  JPY: '¥'
+};
+
 const Root = styled.div.attrs((props) => ({
   className: 'inputWrapper'
 }))`
@@ -26,11 +33,12 @@ const Root = styled.div.attrs((props) => ({
 type props = {
   id: string;
   name: string;
+  currency: string;
   amount?: string;
   handleChange?: (evt: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
-const InputWrapper = ({ id, amount, name, handleChange }: props) => {
+const InputWrapper = ({ id, amount, currency, name, handleChange }: props) => {
   return (
     <Root>
       <span
@@ -42,7 +50,7 @@ const InputWrapper = ({ id, amount, name, handleChange }: props) => {
           justify-content: flex-start;
         `}
       >
-        <span>£</span>
+        <span>{currencySymbolMap[currency]}</span>
         <S.Input id={id} name={name} value={amount} onChange={handleChange} />
       </span>
     </Root>
