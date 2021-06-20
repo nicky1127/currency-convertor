@@ -211,7 +211,7 @@ const ConvertPanel = () => {
       `}
     >
       {/* <form> */}
-      <S.ConvertPanelGridWrapper>
+      <S.ConvertPanelGridContainer>
         <Label htmlFor="input_amount">Amount</Label>
         <InputWrapper
           id="input_amount"
@@ -245,7 +245,7 @@ const ConvertPanel = () => {
           handleChangeInput={handleChangeToCurrency}
         />
         <div></div>
-      </S.ConvertPanelGridWrapper>
+      </S.ConvertPanelGridContainer>
       {hideButton ? (
         <div
           key={amount}

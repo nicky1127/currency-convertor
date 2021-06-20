@@ -70,7 +70,7 @@ export const SwapButtonContainer = styled.div`
   margin: 16px 0 -8px;
 `;
 
-export const ConvertPanelGridWrapper = styled.div`
+export const ConvertPanelGridContainer = styled.div`
   display: flex;
   flex-direction: column;
   @media (min-width: 576px) {
@@ -78,6 +78,18 @@ export const ConvertPanelGridWrapper = styled.div`
     gap: 4px 16px;
     grid-template-columns: minmax(100px, 1fr) minmax(100px, 1fr) auto minmax(100px, 1fr);
     grid-template-rows: auto[input-row-start] auto[input-row-end] auto;
+    grid-auto-flow: column;
+  }
+`;
+
+export const ChartsPanelGridContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  @media (min-width: 576px) {
+    display: grid;
+    gap: 4px 16px;
+    grid-template-columns: minmax(100px, 1fr) auto minmax(100px, 1fr);
+    grid-template-rows: auto [input-row-start] auto [input-row-end];
     grid-auto-flow: column;
   }
 `;

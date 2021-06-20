@@ -211,7 +211,7 @@ const ChartsPanel = () => {
       `}
     >
       {/* <form> */}
-      <S.ConvertPanelGridWrapper>
+      <S.ChartsPanelGridContainer>
         {/* <Label htmlFor="input_amount">Amount</Label>
         <InputWrapper id="input_amount" name="amount" amount={amount} handleChange={handleChange} />
         <ErrorMsg aria-live="assertive">{errMsg}</ErrorMsg> */}
@@ -223,13 +223,11 @@ const ChartsPanel = () => {
           currency={currencyArr[0]}
           handleChangeInput={handleChangeFromCurrency}
         />
-        <div></div>
 
         <div></div>
         <S.SwapButtonContainer>
           <IconButton icon={<SwapIcon />} handleClick={handleClickSwapButton} />
         </S.SwapButtonContainer>
-        <div></div>
 
         <Label htmlFor="input-toCurrency">To</Label>
         <CurrencyWrapper
@@ -238,8 +236,7 @@ const ChartsPanel = () => {
           currency={currencyArr[1]}
           handleChangeInput={handleChangeToCurrency}
         />
-        <div></div>
-      </S.ConvertPanelGridWrapper>
+      </S.ChartsPanelGridContainer>
       {hideButton ? (
         <div
           key={amount}
