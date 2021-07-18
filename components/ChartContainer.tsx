@@ -6,6 +6,7 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
+  Brush,
   Legend,
   ResponsiveContainer
 } from 'recharts';
@@ -93,10 +94,17 @@ const ChartContainer = (props: props) => {
         if (response?.['Meta Data']) {
           setMetaData(response['Meta Data']);
           // setDataObj(response['Time Series FX (Daily)']);
+          console.log(
+            `response['Time Series FX (Daily)']`,
+            Object.entries(response['Time Series FX (Daily)'])
+          );
           const arr = [];
-          for (const [key, value] of Object.entries(response['Time Series FX (Daily)'])) {
-            console.log(`value`, value);
-            arr.push({ time: key, price: +value['2. high'] });
+          // for (const [key, value] of Object.entries(response['Time Series FX (Daily)'])) {
+          //   console.log(`value`, key, value);
+          //   arr.push({ time: key, price: +value['2. high'] });
+          // }
+          for (const key in response['Time Series FX (Daily)']) {
+            arr.unshift({ time: key, price: +response['Time Series FX (Daily)'][key]['2. high'] });
           }
           setDataObj(arr);
         }
@@ -110,23 +118,40 @@ const ChartContainer = (props: props) => {
     //   height: 350px;
     // `}
     >
-      <ResponsiveContainer width="100%" height={350}>
+      <ResponsiveContainer className="chartWrapper" width="100%" height={350}>
         <LineChart
           width={500}
           height={300}
           data={dataObj}
           margin={{
-            top: 5,
-            right: 30,
-            left: 20,
+            top: 10,
+            right: 5,
+            left: 5,
             bottom: 5
           }}
         >
-          <CartesianGrid strokeDasharray="3 3" />
+          <CartesianGrid strokeDasharray="5" vertical={false} />
           <XAxis dataKey="time" />
-          <YAxis />
+          <YAxis
+            orientation="right"
+            tick={{ fontSize: 11 }}
+            // ticks={[10, 20, 30]}
+            domain={['dataMin', 'dataMax']}
+            width={10}
+            axisLine={false}
+            tickLine={false}
+            mirror={true}
+          />
           <Tooltip />
-          <Line type="monotone" dataKey="price" stroke="#8884d8" activeDot={{ r: 8 }} />
+          <Line
+            type="monotone"
+            dataKey="price"
+            stroke="#0071eb"
+            activeDot={{ r: 4 }}
+            dot={false}
+            strokeWidth={1}
+          />
+          <Brush dataKey="time" travellerWidth={5} height={30} stroke="#8884d8"></Brush>
         </LineChart>
       </ResponsiveContainer>
     </div>
