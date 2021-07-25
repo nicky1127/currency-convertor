@@ -83,13 +83,8 @@ const ChartContainer = (props: props) => {
       .then((response) => {
         if (response?.['Meta Data']) {
           setMetaData(response['Meta Data']);
-          // setDataObj(response['Time Series FX (Daily)']);
 
           const arr = [];
-          // for (const [key, value] of Object.entries(response['Time Series FX (Daily)'])) {
-          //   console.log(`value`, key, value);
-          //   arr.push({ time: key, price: +value['2. high'] });
-          // }
           if (chartTime === '1H') {
             for (const key in response['Time Series FX (60min)']) {
               arr.unshift({
